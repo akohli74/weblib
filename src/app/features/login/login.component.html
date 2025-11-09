@@ -52,7 +52,7 @@
           type="submit"
           class="btn"
           [disabled]="loginForm.invalid || loading"
-          aria-busy="{{ loading ? 'true' : 'false' }}"
+          [attr.aria-busy]="loading ? 'true' : 'false'"
         >
           {{ loading ? 'Signing in…' : 'Sign in' }}
         </button>

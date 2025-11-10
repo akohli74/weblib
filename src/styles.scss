@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background-image: url('../assets/weblib.jpg');
+  background-size: cover;        /* Scale image to fill the page */
+  background-repeat: no-repeat;  /* Prevent tiling */
+  background-position: center;   /* Center the image */
+  background-attachment: fixed;  /* Keep it fixed on scroll */
+}

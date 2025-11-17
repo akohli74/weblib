@@ -17,17 +17,12 @@ class TransactionDatabase(UserDatabase, BookDatabase):
     else:
       return (date.today() + timedelta(days=self.REGULAR_DUE_DATE_INCREMENT)).strftime("%Y-%m-%d")
 
-  def checkout(self,
-               userId: int,
-               bookIdentifierType: str,
-               bookIdentifierEntry,
-               notes: str = ''):
+  def checkOut(self, userId: int, bookIdentifierType: str,
+               bookIdentifierEntry, notes: str = ''):
 
     #======= Book Info. Retrieval =======
 
-    book = self.get_book(identifierType=bookIdentifierType,
-                           identifierEntry=bookIdentifierEntry)
-
+    book = self.get_book(identifierType=bookIdentifierType, identifierEntry=bookIdentifierEntry)
     bookStatus, bookInfo = book
 
     if bookStatus == 1:
@@ -45,42 +40,162 @@ class TransactionDatabase(UserDatabase, BookDatabase):
     #======= User Info. Retrieval =======
 
     user = self.get_user(identifier=userId)
-
     userStatus, userInfo = user
 
     if userStatus == 1:
       return 1, "[ERROR]: NONEXISTENT USER!"
 
+    #======= CheckOut =======
+
     currentDate = self.get_current_date()
     dueDate = self.get_due_date(userInfo["isGuest"])
 
+    cur = self.conn.execute(
+      "INSERT INTO transactions (UserID, BookID, LastAction, CheckOutDate, DueDate, Note) VALUES (?, ?, ?, ?, ?, ?)",
+      (userId, bookId, "CHECKEDOUT", currentDate, dueDate, notes)
+    )
+
+    transactionId = cur.lastrowid
+
+    self.conn.commit()
+    cur.close()
+
+    #======= Book Entry Update =======
+
+    bookUpdateStatus, bookUpdateMessage = self.update_book(isbn=bookISBN, isCheckedOut=True, currentTransactionId=transactionId)
+
+    #======= Final CheckOut Status =======
+
+    if bookUpdateStatus == 0:
+      return 0, f"[SUCCESS]: CHECKOUT TRANSACTION CREATED!"
+    else:
+      return 1, bookUpdateMessage
+
+  def checkIn(self, userId: int, bookISBN: int, notes: str = ''):
+
+    #======= Book Info. Retrieval =======
+
+    book = self.get_book(identifierType="ISBN", identifierEntry=bookISBN)
+    bookStatus, bookInfo = book
+
+    if bookStatus == 1:
+      return 1, "[ERROR]: NONEXISTENT BOOK!"
+
+    bookISBN = bookInfo["ISBN"]
+    bookCurrentTransactionId = bookInfo["CurrentTransactionID"]
+    bookIsAvailable = False if bookInfo["CheckedOut"] == 1 else True
+
+    #======= User Info. Retrieval =======
+
+    user = self.get_user(identifier=userId)
+    userStatus, userInfo = user
+
+    if userStatus == 1:
+      return 1, "[ERROR]: NONEXISTENT USER!"
+
+    userId = userInfo["UserID"]
+
+    #======= CheckIn Control =======
+
+    if bookIsAvailable:
+      return 1, "[ERROR]: BOOK IS AVAILABLE, CANNOT BE CHECKED-IN!"
+
+    _, current_transaction_info = self.retrieve_transaction(bookCurrentTransactionId)
+
+    if current_transaction_info["UserID"] != userId:
+      return 1, "[ERROR]: ONLY THE CURRENT BOOK HOLDER CAN RETURN THIS BOOK!"
+
+    #======= CheckIn =======
+
+    currentDate = self.get_current_date()
+
     self.conn.execute(
-      "INSERT INTO transactions (UserID, BookID, Action, CheckOutDate, DueDate, Note) VALUES (?, ?, ?, ?, ?, ?)",
-      (userId, bookId, "CHECKOUT", currentDate, dueDate, notes)
+      "UPDATE transactions SET LastAction = ?, CheckInDate = ?, Note = ? WHERE TransactionID = ?",
+      ("CHECKEDIN", currentDate, notes, bookCurrentTransactionId)
     )
 
     self.conn.commit()
 
     #======= Book Entry Update =======
 
-    bookUpdateStatus, bookUpdateMessage = self.update_book(isbn=bookISBN, isCheckedOut=True)
+    bookUpdateStatus, bookUpdateMessage = self.update_book(isbn=bookISBN, isCheckedOut=False, currentTransactionId=0)
+
+    #======= Final CheckIn Status =======
 
     if bookUpdateStatus == 0:
-      return 0, f"[SUCCESS]: TRANSACTION CREATED!"
+      return 0, f"[SUCCESS]: CHECKOUT TRANSACTION UPDATED --> CHECK-IN!"
     else:
       return 1, bookUpdateMessage
 
+  def retrieve_transaction(self, transactionId: int):
+
+    cur = self.conn.execute(
+      "SELECT * FROM transactions WHERE TransactionID = ?",
+      (transactionId,)
+    )
+
+    if cur.rowcount == 0:
+      cur.close()
+      return 1, f"[ERROR]: NO TRANSACTION COULD BE RETRIEVED FOR TransactionID={transactionId}"
+    else:
+      return 0, dict(cur.fetchone())
+
   def retrieve_user_transactions(self, userId: int):
-    pass
+
+    cur = self.conn.execute(
+      "SELECT * FROM transactions WHERE UserID = ?",
+      (userId,)
+    )
+
+    if cur.rowcount == 0:
+      cur.close()
+      return 1, f"[ERROR] NO TRANSACTIONS FOUND FOR UserID={userId}"
+    else:
+      rows = cur.fetchall()
+      rows = [dict(row) for row in rows]
+      return 0, rows
 
   def retrieve_book_transactions(self, isbn: int):
-    pass
+    pass #FIXME: TO BE IMPLEMENTED IF NEEDED!
+
+  def set_late(self):
+    pass #FIXME: TO BE IMPLEMENTED!
+
+  def set_missing(self):
+    pass #FIXME: TO BE IMPLEMENTED!
 
 if __name__ == '__main__':
   transactionDB = TransactionDatabase()
 
-  print(transactionDB.checkout(
+  # print(transactionDB.checkOut(
+  #   userId=7,
+  #   bookIdentifierType="ISBN",
+  #   bookIdentifierEntry=9780061120084,
+  # ))
+
+  print(transactionDB.checkOut(
     userId=1,
-    bookIdentifierType="Title",
-    bookIdentifierEntry="Brave New World",
+    bookIdentifierType="ISBN",
+    bookIdentifierEntry=9780132350884
   ))
+
+  # print(transactionDB.checkIn(
+  #   userId=1,
+  #   bookISBN=9780132350884
+  # ))
+
+  # print(transactionDB.checkIn(
+  #   userId=1,
+  #   bookISBN=9781451673319
+  # ))
+
+  # print(transactionDB.checkIn(
+  #   userId=1,
+  #   bookISBN=9780547928227
+  # ))
+
+  # print(transactionDB.retrieve_user_transactions(userId=1))
+
+  # print(transactionDB.retrieve_transaction(14))
+
+  # print(transactionDB.get_transactions_table_next_id())

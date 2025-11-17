@@ -38,13 +38,15 @@ class BookDatabase(BaseDB):
   def update_book(self, isbn: int,
                   isCheckedOut: bool = False,
                   isLate: bool = False,
-                  isMissing: bool = False):
+                  isMissing: bool = False,
+                  currentTransactionId: int = None):
 
     """
     :param isbn:
     :param isCheckedOut:
     :param isLate:
     :param isMissing:
+    :param currentTransactionId:
 
     This method updates a book entry in the SQLite server given ISBN --> books table
 
@@ -57,10 +59,16 @@ class BookDatabase(BaseDB):
     isLate = 1 if isLate else 0
     isMissing = 1 if isMissing else 0
 
-    cur = self.conn.execute(
-      "UPDATE books SET CheckedOut = ?, Late = ?, Missing = ? WHERE ISBN = ?",
-      (isCheckedOut, isLate, isMissing, str(isbn))
-    )
+    if currentTransactionId is not None:
+      cur = self.conn.execute(
+        "UPDATE books SET CheckedOut = ?, Late = ?, Missing = ?, CurrentTransactionID = ? WHERE ISBN = ?",
+        (isCheckedOut, isLate, isMissing, currentTransactionId, str(isbn))
+      )
+    else:
+      cur = self.conn.execute(
+        "UPDATE books SET CheckedOut = ?, Late = ?, Missing = ? WHERE ISBN = ?",
+        (isCheckedOut, isLate, isMissing, str(isbn))
+      )
 
     if cur.rowcount == 0:
       cur.close()
@@ -150,11 +158,11 @@ if __name__ == '__main__':
   #                 identifierEntry="J.R.R. Tolkien")
 
 
-  print(bookDB.get_book(identifierType="ISBN",
-                  identifierEntry=9781451673319))
+  # print(bookDB.get_book(identifierType="ISBN",
+  #                 identifierEntry=9781451673319))
 
   # print(bookDB.update_book(
-  #   isbn=9781451673319,
+  #   isbn=9780547928227,
   #   isCheckedOut=True,
   #   isLate=True,
   #   isMissing=True

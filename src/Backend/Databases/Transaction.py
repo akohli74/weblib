@@ -1,5 +1,5 @@
-from UserDatabase import UserDatabase
-from BookDatabase import BookDatabase
+from .UserDatabase import UserDatabase
+from .BookDatabase import BookDatabase
 from datetime import date, timedelta
 
 class TransactionDatabase(UserDatabase, BookDatabase):
@@ -134,11 +134,13 @@ class TransactionDatabase(UserDatabase, BookDatabase):
       (transactionId,)
     )
 
-    if cur.rowcount == 0:
-      cur.close()
+    row = cur.fetchone()
+    cur.close()
+
+    if not row:
       return 1, f"[ERROR]: NO TRANSACTION COULD BE RETRIEVED FOR TransactionID={transactionId}"
     else:
-      return 0, dict(cur.fetchone())
+      return 0, dict(row)
 
   def retrieve_user_transactions(self, userId: int):
 
@@ -147,11 +149,12 @@ class TransactionDatabase(UserDatabase, BookDatabase):
       (userId,)
     )
 
-    if cur.rowcount == 0:
-      cur.close()
+    rows = cur.fetchall()
+    cur.close()
+
+    if not rows:
       return 1, f"[ERROR] NO TRANSACTIONS FOUND FOR UserID={userId}"
     else:
-      rows = cur.fetchall()
       rows = [dict(row) for row in rows]
       return 0, rows
 

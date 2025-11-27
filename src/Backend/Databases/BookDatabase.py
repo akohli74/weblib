@@ -1,4 +1,4 @@
-from Base import BaseDB
+from .Base import BaseDB
 import sqlite3
 
 class BookDatabase(BaseDB):
@@ -15,7 +15,7 @@ class BookDatabase(BaseDB):
     :param author:
     :param isbn:
     :param numberOfPages:
-    :param publicationDate:
+    :param publicationDate: Format (yyyy-mm-dd)
 
     This method adds a new book to the SQLite server --> books table
 
@@ -102,18 +102,15 @@ class BookDatabase(BaseDB):
         query = ""
 
     params = (identifierEntry,)
-
     cur = self.conn.execute(query, params)
 
-    if cur.rowcount == 0:
-      cur.close()
+    row = cur.fetchone()
+    cur.close()
+
+    if row is None:
       return 1, "[ERROR]: NONEXISTENT BOOK!"
     else:
-      try:
-        return 0, dict(cur.fetchone())
-      except TypeError as e:
-        cur.close()
-        return 1, "[ERROR]: NONEXISTENT BOOK!"
+      return 0, dict(row)
 
   def delete_book(self, isbn: int):
 
@@ -126,18 +123,25 @@ class BookDatabase(BaseDB):
 
     return-tuple-2: (1, "[ERROR]: NONEXISTENT BOOK!")
     """
+
+    status, book = self.get_book(identifierType="ISBN", identifierEntry=isbn)
+
+    # === Book Deletion Control ===
+    if status == 1:
+      return 1, "[ERROR]: NONEXISTENT BOOK!"
+
+    if book["CheckedOut"] == 1:
+      return 1, "[ERROR]: BOOK MUST BE RETURNED BEFORE BEING DELETED!"
+
+    # === Book Deletion System ===
     cur = self.conn.execute(
       "DELETE FROM books WHERE ISBN = ?",
       (isbn,)
     )
 
-    if cur.rowcount == 0:
-      cur.close()
-      return 1, "[ERROR]: NONEXISTENT BOOK!"
-    else:
-      self.conn.commit()
-      cur.close()
-      return 0, "[SUCCESS]: BOOK DELETED!"
+    self.conn.commit()
+    cur.close()
+    return 0, "[SUCCESS]: BOOK DELETED!"
 
 if __name__ == '__main__':
   pass
@@ -168,4 +172,4 @@ if __name__ == '__main__':
   #   isMissing=True
   # ))
 
-  # bookDB.delete_book(9780547928227)
+  print(bookDB.delete_book(9780262033848))

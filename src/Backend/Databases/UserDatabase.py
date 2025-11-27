@@ -1,4 +1,4 @@
-from Base import BaseDB
+from .Base import BaseDB
 import sqlite3
 
 class UserDatabase(BaseDB):
@@ -51,6 +51,11 @@ class UserDatabase(BaseDB):
     return-tuple-2: (1, "[ERROR]: NONEXISTENT USER!")
     """
 
+    try:
+      identifier = int(identifier)
+    except ValueError:
+      pass
+
     if isinstance(identifier, int):
       query = "SELECT * FROM users WHERE UserID = ?"
     else:
@@ -59,14 +64,15 @@ class UserDatabase(BaseDB):
     params = (identifier,)
     cur = self.conn.execute(query, params)
 
-    if cur.rowcount == 0:
-      cur.close()
+    row = cur.fetchone()
+    cur.close()
+
+    if not row:
       return 1, "[ERROR]: NONEXISTENT USER!"
     else:
       try:
-        return 0, dict(cur.fetchone())
-      except TypeError as e:
-        cur.close()
+        return 0, dict(row)
+      except TypeError:
         return 1, "[ERROR]: NONEXISTENT USER!"
 
   def delete_user(self, userID: int):

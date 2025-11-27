@@ -8,6 +8,5 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(),
     provideRouter(routes)
-  ],
-  imports: [FormsModule],
+  ]
 }).catch(err => console.error(err));

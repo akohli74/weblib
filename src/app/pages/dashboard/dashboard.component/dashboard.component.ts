@@ -6,13 +6,7 @@ import { MatCardModule } from '@angular/material/card';
   standalone: true,
   selector: 'app-dashboard-page',
   imports: [MatCardModule],
-  template: `
-    <mat-card>
-      <mat-card-title>Dashboard</mat-card-title>
-      <mat-card-content>
-        <p>Welcome to the dashboard.</p>
-      </mat-card-content>
-    </mat-card>
-  `
+  templateUrl: 'dashboard.component.html',
+  styleUrl: 'dashboard.component.scss'
 })
 export class DashboardComponent {}

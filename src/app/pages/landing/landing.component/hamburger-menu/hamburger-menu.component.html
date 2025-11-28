@@ -1,0 +1,26 @@
+<div class="menu-container">
+  <!-- Hamburger button -->
+  <button
+    type="button"
+    class="hamburger"
+    [class.active]="isOpen"
+    (click)="toggleMenu()"
+    aria-label="Toggle navigation menu"
+    [attr.aria-expanded]="isOpen"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Slide-out menu -->
+  <nav class="side-menu" [class.open]="isOpen">
+    <a
+      *ngFor="let item of menuItems"
+      [routerLink]="item.route"
+      (click)="closeMenu()"
+    >
+      {{ item.label }}
+    </a>
+  </nav>
+</div>

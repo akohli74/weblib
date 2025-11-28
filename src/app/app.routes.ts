@@ -18,6 +18,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
+        path: '',
+        loadComponent: () =>
+          import('./pages/landing/landing.component/landing.component').then(m => m.LandingComponent)
+      },
+      {
         path: 'dashboard',
         loadComponent: () =>
           import('./pages/dashboard/dashboard.component/dashboard.component').then(m => m.DashboardComponent)
@@ -43,7 +48,7 @@ export const routes: Routes = [
           import('./pages/alerts/alerts.component/alerts.component').then(m => m.AlertsComponent)
       },
       {
-        path: '', pathMatch: 'full', redirectTo: 'dashboard'
+        path: '', pathMatch: 'full', redirectTo: 'landing'
       },
       {
         path: '**',

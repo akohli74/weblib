@@ -6,13 +6,6 @@ import { MatCardModule } from '@angular/material/card';
   standalone: true,
   selector: 'app-library-page',
   imports: [MatCardModule],
-  template: `
-    <mat-card>
-      <mat-card-title>Library</mat-card-title>
-      <mat-card-content>
-        <p>Welcome to Web Lib.</p>
-      </mat-card-content>
-    </mat-card>
-  `
+  templateUrl: 'library.component.html'
 })
 export class LibraryComponent {}

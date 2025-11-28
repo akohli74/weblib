@@ -1,0 +1,248 @@
+.card {
+  height: 1000px;
+  width: 100vh;
+}
+
+.card-title {
+  width: 700px;
+  margin: 0 auto;
+  margin-top: 25px;
+  font-weight: bold;
+  font-size: 3em;
+}
+
+.alert-banner {
+  background-image: url('../../../../../assets/weblib.jpg');
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  height: 25vh;
+  width: 100%;
+  margin-top: 50px;
+  font-family: 'Inconsolata', monospace;
+}
+
+.alert-content {
+  width: 75vh;
+  margin: 0 auto;
+}
+
+.alert-title {
+  font-size: 5em;
+  font-weight:'bold';
+  font-family: 'Inconsolata', monospace;
+  margin-left: 25px;
+}
+
+.alert-text-color {
+  color: #1B3B65;
+}
+
+.alert-details {
+  font-size: 2em;
+  font-weight: bold;
+  margin-left: 25px;
+}
+
+.tile-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  height: 25vh;
+  width: 100vw;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  width: 250px;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* container */
+.menu-container {
+  position: relative;
+}
+
+/* hamburger button */
+.hamburger {
+  cursor: pointer;
+  width: 30px;
+  height: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5px;
+  margin: 16px;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background: #333;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* animation when open */
+.hamburger.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* sliding menu */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -250px; /* hidden */
+  width: 250px;
+  height: 100vh;
+  background: #1B3B65;
+  color: white;
+  padding-top: 60px;
+  transition: left 0.3s ease;
+}
+
+.side-menu.open {
+  left: 0;
+}
+
+/* menu items */
+.side-menu a {
+  display: block;
+  padding: 16px;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+}
+
+.side-menu a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.all-books {
+  color: #1184E8;
+  margin: auto;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.all-customers {
+  color: #EDE100;
+  margin: auto;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.checkouts {
+  color: #0DAA02;
+  margin: auto;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.latefees {
+  color: #F20B0B;
+  margin: auto;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.all-books-btn {
+  margin-top: auto;
+  margin-left: 25px;
+  width: 200px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(180deg, var(--accent), var(--accent-press));
+  background-color: #1184E8;
+  opacity: 0.9;
+  color: white;
+  transition: transform 80ms ease, filter 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 8px 20px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
+.all-customers-btn {
+  margin-top: auto;
+  margin-left: 25px;
+  width: 200px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(180deg, var(--accent), var(--accent-press));
+  background-color: #EDE100;
+  opacity: 0.9;
+  color: white;
+  transition: transform 80ms ease, filter 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 8px 20px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
+.checkouts-btn {
+  margin-top: auto;
+  margin-left: 25px;
+  width: 200px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(180deg, var(--accent), var(--accent-press));
+  background-color: #0DAA02;
+  opacity: 0.9;
+  color: white;
+  transition: transform 80ms ease, filter 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 8px 20px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
+.latefees-btn {
+  margin-top: auto;
+  margin-left: 25px;
+  width: 200px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(180deg, var(--accent), var(--accent-press));
+  background-color: #F20B0B;
+  opacity: 0.9;
+  color: white;
+  transition: transform 80ms ease, filter 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 8px 20px color-mix(in oklab, var(--accent) 35%, transparent);
+}

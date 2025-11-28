@@ -1,8 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+/* src/styles.scss */
+
+@use '@angular/material' as mat;
+
+/* Global Material 3 theme */
+html {
+  @include mat.theme((
+    // use any of the built-in palettes: $red-palette, $violet-palette, etc.
+    color: mat.$violet-palette,
+    typography: Roboto,
+    density: 0, // 0 to -5 (more negative = more compact)
+  ));
+}
+
+html,
 body {
-  background-image: url('../assets/weblib.jpg');
-  background-size: cover;        /* Scale image to fill the page */
-  background-repeat: no-repeat;  /* Prevent tiling */
-  background-position: center;   /* Center the image */
-  background-attachment: fixed;  /* Keep it fixed on scroll */
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }

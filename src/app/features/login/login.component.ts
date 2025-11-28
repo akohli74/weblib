@@ -24,6 +24,7 @@ export class LoginComponent {
   loading = false;
   errorMessage: string | null = null;
 
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private router: Router) {}
 
   async onSubmit(form?: NgForm): Promise<void> {

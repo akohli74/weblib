@@ -1,0 +1,68 @@
+.menu-container {
+  position: relative;
+  z-index: 1000; // keep above content
+}
+
+/* Hamburger button */
+.hamburger {
+  cursor: pointer;
+  width: 30px;
+  height: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5px;
+  margin: 8px;
+  border: none;
+  background: transparent;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background: #1b3b65;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* Animation when menu is active */
+.hamburger.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Slide-out menu */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -260px; // hidden by default
+  width: 260px;
+  height: 100vh;
+  background: #1b3b65;
+  color: white;
+  padding-top: 60px;
+  transition: left 0.3s ease;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.side-menu.open {
+  left: 0;
+}
+
+/* Menu items */
+.side-menu a {
+  display: block;
+  padding: 16px 20px;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+
+.side-menu a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}

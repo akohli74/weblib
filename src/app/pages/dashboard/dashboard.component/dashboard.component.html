@@ -1,6 +1,31 @@
-    <mat-card>
-      <mat-card-title>Dashboard</mat-card-title>
-      <mat-card-content>
-        <p>Welcome to the dashboard.</p>
-      </mat-card-content>
+    <mat-card class="card">
+      <div class="card">
+        <mat-card-title>
+          <div class="dashboard-card-title">
+            <span>Dashboard</span>
+          </div>
+        </mat-card-title>
+      </div>
+      <div class="analytics-tile-container">
+        <mat-card-title>
+          <div class="analytics-card-title">
+            <span>Analytics</span>
+          </div>
+        </mat-card-title>
+        <mat-card class="analytics-tile" *ngFor="let item of items">
+          <mat-card-header>
+            <mat-card-title><mat-icon class="{{item.class}}">{{item.icon}}</mat-icon>{{ item.title }}</mat-card-title>
+            <app-hamburger-menu></app-hamburger-menu>
+          </mat-card-header>
+          <mat-card-content class="{{item.class}}">
+            {{ item.description }}
+          </mat-card-content>
+          <button
+            type="button"
+            class="{{item.buttonClass}}"
+          >
+            {{item.buttonText}}
+          </button>
+        </mat-card>
+      </div>
     </mat-card>

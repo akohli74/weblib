@@ -1,0 +1,117 @@
+<div class="dashboard-page">
+
+  <header class="top-bar">
+    <h1>Dashboard</h1>
+
+    <div class="search-box">
+      <i class="icon-menu"></i>
+      <input
+        type="text"
+        placeholder="Search Book, Customer, ISBN"
+      />
+      <i class="icon-search"></i>
+    </div>
+  </header>
+
+  <!-- Top stats -->
+  <section class="stats-row">
+    <div class="stat-card">
+      <div class="label">Total Books</div>
+      <div class="value">12,485</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Books Checked Out</div>
+      <div class="value">3,284</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Total Members</div>
+      <div class="value">1,028</div>
+    </div>
+  </section>
+
+  <!-- Analytics cards -->
+  <section class="analytics">
+    <div class="analytics-header">
+      <h2>Analytics</h2>
+      <span class="period">Past Month</span>
+    </div>
+
+    <div class="analytics-row">
+      <div class="analytics-card green">
+        <div class="title">
+          <i class="icon-book-open"></i>
+          <span>Check Outs</span>
+        </div>
+        <div class="metric">
+          <span class="value">74</span>
+          <span class="trend down">▼ 30.6%</span>
+        </div>
+        <button class="primary-btn">View Checkouts</button>
+      </div>
+
+      <div class="analytics-card red">
+        <div class="title">
+          <i class="icon-dollar"></i>
+          <span>Late Fee's</span>
+        </div>
+        <div class="metric">
+          <span class="value">$254</span>
+          <span class="trend up">▲ 25.7%</span>
+        </div>
+        <button class="primary-btn">View Customers</button>
+      </div>
+
+      <div class="analytics-card purple">
+        <div class="title">
+          <i class="icon-warning"></i>
+          <span>Over Dues</span>
+        </div>
+        <div class="metric">
+          <span class="value">7</span>
+          <span class="trend down">▼ 30.6%</span>
+        </div>
+        <button class="primary-btn">View Customers</button>
+      </div>
+
+      <div class="analytics-card yellow">
+        <div class="title">
+          <i class="icon-user-plus"></i>
+          <span>New Members</span>
+        </div>
+        <div class="metric">
+          <span class="value">17</span>
+          <span class="trend up">▲ 25.7%</span>
+        </div>
+        <button class="primary-btn">View Books</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent activity table -->
+  <section class="recent-activity">
+    <h2>Recent Activity</h2>
+  
+    <div class="recent-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Member</th>
+            <th>Activity</th>
+            <th>Book</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of recentActivity">
+            <td>{{ row.member }}</td>
+            <td>{{ row.activity }}</td>
+            <td>{{ row.book }}</td>
+            <td>{{ row.date | date: 'MMM d, y' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+
+</div>

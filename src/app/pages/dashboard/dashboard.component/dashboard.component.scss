@@ -1,9 +1,206 @@
 .app-background {
-  background-image: url('../../assets/weblib.jpg');
+  background: #f5f5f5;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
   height: 100vh;
   width: 100vw;
+}
+/* main page layout */
+.dashboard-page {
+  padding: 24px 32px;
+  max-width: 1650px;
+  min-height: 100%;
+  background: #f5f5f5; /* light grey behind the cards */
+}
+
+/* top bar */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 6px 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+
+  input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    min-width: 260px;
+  }
+}
+
+/* top stats cards */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  justify-content: start;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  max-width: 280px;       
+
+  .label {
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 8px;
+  }
+
+  .value {
+    font-size: 26px;
+    font-weight: 700;
+  }
+}
+
+/* analytics section */
+.analytics-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .period {
+    font-size: 13px;
+    color: #777777;
+  }
+}
+
+.analytics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  justify-content: start;
+}
+
+.analytics-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  max-width: 300px;    
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .title {
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .metric {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+
+    .value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .trend {
+      font-size: 12px;
+    }
+
+    .up {
+      color: #2fa24f;
+    }
+
+    .down {
+      color: #d64545;
+    }
+  }
+
+  .primary-btn {
+    margin-top: 8px;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+/* color accents for each analytics card */
+.analytics-card.green .primary-btn {
+  background: #2fa24f;
+  color: #ffffff;
+}
+
+.analytics-card.red .primary-btn {
+  background: #ff5c5c;
+  color: #ffffff;
+}
+
+.analytics-card.purple .primary-btn {
+  background: #f14bf3;
+  color: #ffffff;
+}
+
+.analytics-card.yellow .primary-btn {
+  background: #ffd447;
+}
+
+/* recent activity table */
+.recent-activity h2 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.recent-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  padding: 12px 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th,
+td {
+  padding: 10px 8px;
+}
+
+th {
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+tbody tr:nth-child(even) {
+  background: #fafafa;
 }

@@ -1,0 +1,108 @@
+<div class="library-page">
+    <header class="header-row">
+      <h1>Books</h1>
+    </header>
+  
+    <!-- Toolbar -->
+    <section class="toolbar">
+      <div class="search-wrapper">
+        <span class="icon-search">🔍</span>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Search by title, author, or ISBN"
+        />
+      </div>
+  
+      <div class="toolbar-right">
+        <select
+          class="pill-select"
+          [(ngModel)]="statusFilter"
+        >
+          <option value="All">Status</option>
+          <option value="Available">Available</option>
+          <option value="Checked Out">Checked Out</option>
+          <option value="Missing">Missing</option>
+          <option value="Overdue">Overdue</option>
+        </select>
+  
+        <select
+          class="pill-select"
+          [(ngModel)]="genreFilter"
+        >
+          <option value="All">Genre</option>
+          <option value="Fiction">Fiction</option>
+          <option value="Non-Fiction">Non-Fiction</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+          <option value="Mystery">Mystery</option>
+        </select>
+  
+        <button class="primary-btn">+ Add Book</button>
+  
+        <button
+          class="link-btn"
+          type="button"
+          (click)="resetFilters()"
+        >
+          Reset filters
+        </button>
+      </div>
+    </section>
+  
+    <!-- Table card -->
+    <section class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-checkbox">
+              <input type="checkbox" />
+            </th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Genre</th>
+            <th>Status</th>
+            <th class="col-actions">Actions</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr *ngFor="let book of filteredBooks">
+            <td class="col-checkbox">
+              <input type="checkbox" />
+            </td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.genre }}</td>
+            <td>
+              <span
+                class="status-badge"
+                [ngClass]="book.status.replace(' ', '-').toLowerCase()"
+              >
+                {{ book.status }}
+              </span>
+            </td>
+            <td class="col-actions">
+              <button class="icon-btn" title="Edit">✏️</button>
+              <button class="icon-btn" title="Delete">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- Simple footer / pagination stub -->
+      <div class="table-footer">
+        <span>
+          Showing 1 to {{ filteredBooks.length }} of {{ books.length }} books
+        </span>
+        <div class="pagination">
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <span class="dots">…</span>
+          <button class="page-btn">50</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  

@@ -1,0 +1,112 @@
+<div class="checkouts-page">
+    <header class="header-row">
+      <h1>Checkouts</h1>
+    </header>
+  
+    <!-- Filters card -->
+    <section class="filters-card">
+      <div class="filters-grid">
+        <div class="filter-field">
+          <label>Status</label>
+          <select class="pill-select" [(ngModel)]="statusFilter">
+            <option value="All">All</option>
+            <option value="Active">Active</option>
+            <option value="Overdue">Overdue</option>
+            <option value="Lost">Lost</option>
+          </select>
+        </div>
+  
+        <div class="filter-field">
+          <label>Date Range</label>
+          <select class="pill-select" [(ngModel)]="dateRangeFilter">
+            <option value="All">All</option>
+            <option value="Past7">Past 7 days</option>
+            <option value="Past30">Past 30 days</option>
+          </select>
+        </div>
+  
+        <div class="filter-field">
+          <label>Fees</label>
+          <select class="pill-select" [(ngModel)]="feeFilter">
+            <option value="All">All</option>
+            <option value="Zero">0</option>
+            <option value="NonZero">&gt; 0</option>
+          </select>
+        </div>
+  
+        <div class="filter-field reset-wrapper">
+          <button
+            type="button"
+            class="reset-btn"
+            (click)="resetFilters()"
+          >
+            Reset filters
+          </button>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Table card -->
+    <section class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Book</th>
+            <th>Checkout</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Fees</th>
+            <th class="col-action">Action</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr *ngFor="let row of filteredCheckouts">
+            <td>{{ row.customer }}</td>
+            <td>
+              <span class="book-title">{{ row.bookTitle }}</span>
+              <span
+                *ngIf="row.bookSubtitle"
+                class="book-subtitle"
+                >{{ row.bookSubtitle }}</span
+              >
+            </td>
+            <td>{{ row.checkoutDate }}</td>
+            <td>{{ row.dueDate }}</td>
+            <td>
+              <span
+                class="status-badge"
+                [ngClass]="row.status.toLowerCase()"
+              >
+                {{ row.status }}
+              </span>
+            </td>
+            <td>
+              {{ row.fees | currency: 'USD':'symbol':'1.2-2' }}
+            </td>
+            <td class="col-action">
+              <button class="icon-btn" title="View details">
+                👁️
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <div class="table-footer">
+        <span>
+          Showing 1–{{ filteredCheckouts.length }} of {{ checkouts.length }}
+          checkouts
+        </span>
+        <div class="pagination">
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <span class="dots">…</span>
+          <button class="page-btn">18</button>
+          <button class="page-btn">&gt;</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  

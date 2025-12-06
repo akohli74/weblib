@@ -5,12 +5,14 @@ class BookDatabase(BaseDB):
 
   def add_book(self,
                title: str,
+               genre: str,
                author: str,
                isbn: int,
                numberOfPages: int = 0,
                publicationDate: str = "Unavailable"):
 
     """
+    :param genre:
     :param title:
     :param author:
     :param isbn:
@@ -26,8 +28,8 @@ class BookDatabase(BaseDB):
 
     try:
       self.conn.execute(
-        "INSERT INTO books (Title, Author, ISBN, NumberOfPages, PublicationDate) VALUES (?, ?, ?, ?, ?)",
-        (title, author, str(isbn), numberOfPages, publicationDate)
+        "INSERT INTO books (Title, Genre, Author, ISBN, NumberOfPages, PublicationDate) VALUES (?, ?, ?, ?, ?, ?)",
+        (title, genre, author, str(isbn), numberOfPages, publicationDate)
       )
       self.conn.commit()
       return 0, "[SUCCESS]: BOOK CREATED!"
@@ -112,6 +114,21 @@ class BookDatabase(BaseDB):
     else:
       return 0, dict(row)
 
+  def get_all_books(self):
+
+    cur = self.conn.execute(
+      "SELECT * FROM books"
+    )
+
+    result = cur.fetchall()
+    cur.close()
+
+    if len(result) == 0:
+      return 1, "[ERROR]: NO BOOK FOUND!"
+    else:
+      rows = [dict(row) for row in result]
+      return 0, rows
+
   def delete_book(self, isbn: int):
 
     """
@@ -148,11 +165,12 @@ if __name__ == '__main__':
   bookDB = BookDatabase()
 
   # bookDB.add_book(
-  #   title="The Hobbit",
-  #   author="J.R.R. Tolkien",
-  #   isbn=9780547928227,
-  #   numberOfPages=310,
-  #   publicationDate="1937-09-21"
+  #   title="Dune",
+  #   genre="Science Fiction",
+  #   author="Frank Herbert",
+  #   isbn=9780441172719,
+  #   numberOfPages=896,
+  #   publicationDate="1965-08-01"
   # )
 
   # bookDB.get_book(identifierType="Title",
@@ -172,4 +190,5 @@ if __name__ == '__main__':
   #   isMissing=True
   # ))
 
-  print(bookDB.delete_book(9780262033848))
+  # print(bookDB.delete_book(9780262033848))
+  print(bookDB.get_all_books())

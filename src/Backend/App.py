@@ -37,6 +37,11 @@ class BookCheckinRequest(BaseModel):
   bookISBN: int
   notes: str = ''
 
+class UserCreationRequest(BaseModel):
+  firstName: str
+  lastName: str
+  email: str
+
 # ======= Defines Endpoints =======
 @app.post("/login")
 def login(data: LoginRequest):
@@ -85,18 +90,58 @@ def bookReturn(data: BookCheckinRequest):
   status, message = transaction.checkIn(userId, bookISBN, notes)
   return {"status": status, "message": message}
 
+# @app.get("/book/get")
+# def bookLookup(identifierType: str, identifierEntry):
+#   status, val = bookDB.get_book(identifierType, identifierEntry)
+#
+#   if status == 1:
+#     return {"status": status, "message": val}
+#   else:
+#     return {"status": status, "book": val}
+
 @app.get("/book/get")
-def bookLookup(identifierType: str, identifierEntry):
-  status, val = bookDB.get_book(identifierType, identifierEntry)
+def bookLookup():
+  status, val = bookDB.get_all_books()
+
+  if status == 1:
+    return {"status": status, "message": val}
+  else:
+    return {"status": status, "books": val}
+
+@app.post("/user/add")
+def addGuestUser(data: UserCreationRequest):
+  firstName = data.firstName
+  lastName = data.lastName
+  email = data.email
+
+  status, val = userDB.add_user(firstName, lastName, email, True)
 
   if status == 1:
     return {"status": status, "message": val}
   else:
     return {"status": status, "book": val}
 
+# @app.get("/user/get")
+# def customerLookup(identifier):
+#   status, val = userDB.get_user(identifier)
+#
+#   if status == 1:
+#     return {"status": status, "message": val}
+#   else:
+#     return {"status": status, "book": val}
+
 @app.get("/user/get")
-def customerLookup(identifier):
-  status, val = userDB.get_user(identifier)
+def customerLookup():
+  status, val = userDB.get_all_users()
+
+  if status == 1:
+    return {"status": status, "message": val}
+  else:
+    return {"status": status, "book": val}
+
+@app.get("/transactions/get")
+def transactionLookup():
+  status, val = transaction.retrieve_all_transactions()
 
   if status == 1:
     return {"status": status, "message": val}

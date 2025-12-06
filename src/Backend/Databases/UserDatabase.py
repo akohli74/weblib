@@ -1,7 +1,13 @@
 from .Base import BaseDB
 import sqlite3
 
+from datetime import date, timedelta
+
 class UserDatabase(BaseDB):
+
+  @staticmethod
+  def get_current_date() -> str:
+    return date.today().strftime("%Y-%m-%d")
 
   def add_user(self,
                firstName: str,
@@ -22,12 +28,13 @@ class UserDatabase(BaseDB):
     return-tuple-2: (1, "[ERROR]: ALREADY REGISTERED EMAIL!")
     """
 
+    date_joined = self.get_current_date()
     guest = 1 if guest else 0
 
     try:
       self.conn.execute(
-        "INSERT INTO users (FirstName, LastName, Email, isGuest) VALUES (?, ?, ?, ?)",
-        (firstName, lastName, email, guest)
+        "INSERT INTO users (FirstName, LastName, Email, Joined, isGuest, Status) VALUES (?, ?, ?, ?, ?, ?)",
+        (firstName, lastName, email, date_joined, guest, "Active")
       )
       self.conn.commit()
       return 0, "[SUCCESS]: USER CREATED!"
@@ -75,6 +82,21 @@ class UserDatabase(BaseDB):
       except TypeError:
         return 1, "[ERROR]: NONEXISTENT USER!"
 
+  def get_all_users(self):
+
+    cur = self.conn.execute(
+      "SELECT * FROM users"
+    )
+
+    result = cur.fetchall()
+    cur.close()
+
+    if len(result) == 0:
+      return 1, "[ERROR]: NO USER FOUND!"
+    else:
+      rows = [dict(row) for row in result]
+      return 0, rows
+
   def delete_user(self, userID: int):
 
     """
@@ -105,5 +127,5 @@ if __name__ == '__main__':
   userDB = UserDatabase()
   # print(userDB.add_user('Pedro', 'Paiva', 'ppaiva@umich.edu'))
   # print(userDB.add_user('Elon', 'Musk', 'emusk@umich.edu'))
-  print(userDB.get_user(4))
+  # print(userDB.get_user(4))
   # print(userDB.delete_user(9))

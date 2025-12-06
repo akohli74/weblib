@@ -158,6 +158,21 @@ class TransactionDatabase(UserDatabase, BookDatabase):
       rows = [dict(row) for row in rows]
       return 0, rows
 
+  def retrieve_all_transactions(self):
+
+    cur = self.conn.execute(
+      "SELECT * FROM transactions"
+    )
+
+    result = cur.fetchall()
+    cur.close()
+
+    if len(result) == 0:
+      return 1, "[ERROR] NO TRANSACTION FOUND!"
+    else:
+      rows = [dict(row) for row in result]
+      return 0, rows
+
   def retrieve_book_transactions(self, isbn: int):
     pass #FIXME: TO BE IMPLEMENTED IF NEEDED!
 

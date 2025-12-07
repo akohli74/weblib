@@ -3,7 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';  
 import { MatCardModule } from '@angular/material/card';
 import { WebLibService } from '../../../services/weblib.service';
-
+import { Transaction } from '../../../models/transaction';
+import { Book } from '../../../models/book';
+import { User } from '../../../models/user';
+import { Activity } from '../../../models/activity';
+import { forkJoin } from 'rxjs';
 @Component({
   standalone: true,
   selector: 'app-dashboard-page',
@@ -12,24 +16,100 @@ import { WebLibService } from '../../../services/weblib.service';
   styleUrls: ['./dashboard.component.scss'],   
 })
 export class DashboardComponent implements OnInit {
-  books: unknown;
-  transactions: unknown;
+  books: Book[] = [];
+  transactions: Transaction[] = [];
+  users: User[] = [];
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private webLib: WebLibService) {}
 
   ngOnInit(): void {
-    this.webLib.getTransactions().subscribe( {
-      next: t => { this.transactions = t },
-      error: err => { console.error('Error loading transactions', err); }
-    });
-    this.webLib.getBooks().subscribe({
-      next: d => { this.books = d; },
-      error: err => console.error('Error loading stuff', err)
+    const tx$    = this.webLib.getTransactions();  // Observable<...>
+    const books$ = this.webLib.getBooks();               // Observable<...>
+    const users$ = this.webLib.getUsers();               // Observable<...>
+
+    forkJoin({
+      transactions: tx$,
+      books: books$,
+      users: users$
+    }).subscribe(({ transactions, books, users }) => {
+      // all 3 finished here
+      this.transactions = transactions.book;
+      this.books = books.books;
+      this.users = users.book;
+
+      // 🔽 do whatever comes "after all the functions return"
+      this.sortTransactions();
+      this.buildDashboard();
     });
   }
-  recentActivity = [
+
+  recentActivity: Activity[] = [
     { member: 'Jaden Becker', activity: 'Checked out', book: 'Mockingbird', date: new Date('2024-05-20') },
     { member: 'Amanda Perkins', activity: 'Returned', book: '1984', date: new Date('2024-05-19') },
   ];
+
+  sortTransactions(): Transaction[] {
+    return this.transactions ? this.transactions.sort((a, b) => {
+        // Determine the comparison date for each transaction
+        const dateA =
+          a.LastAction === "CHECKEDIN"
+            ? new Date(a.CheckInDate as string)
+            : new Date(a.CheckOutDate as string);
+
+        const dateB =
+          b.LastAction === "CHECKEDIN"
+            ? new Date(b.CheckInDate as string)
+            : new Date(b.CheckOutDate as string);
+
+        return dateA.getTime() - dateB.getTime();
+    }) : new Array<Transaction>();
+  }
+
+  buildDashboard(): void {
+    const activity: Activity[] = [];
+    this.transactions.slice(0, 5).forEach(t => {
+      const book = this.books.find(b => b.BookID === t.BookID) ?? this.createEmptyBook(-99);
+      const user = this.users.find(u => u.UserID === t.UserID) ?? this.createEmptyUser(-99);
+      const date = t.LastAction === 'CHECKEDIN' ? t.CheckInDate : t.CheckOutDate;
+
+      activity.push({
+        member: `${user.FirstName} ${user.LastName}`,
+        activity: `${(t.LastAction === 'CHECKEDIN' ? 'Checked-In' : 'Checked-Out')}`,
+        book: `${book.Title}`,
+        date: new Date(date ? date : Date.now())
+      });
+    });
+    
+    this.recentActivity = activity;
+  }
+
+  createEmptyBook(bookId: number): Book {
+    return {
+      BookID: bookId,
+      Title: "",
+      Genre: "",
+      Author: "",
+      ISBN: "",
+      NumberOfPages: 0,
+      PublicationDate: "",
+      CheckedOut: 0,
+      Late: 0,
+      Missing: 0,
+      CurrentTransactionID: 0
+    };
+  }
+
+  createEmptyUser(userId: number): User {
+    return {
+      UserID: userId,
+      FirstName: "",
+      LastName: "",
+      Email: "",
+      Joined: "",
+      Fees: 0,
+      isGuest: 0,
+      Status: "Active"
+    };
+  }
 }

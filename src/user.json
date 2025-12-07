@@ -1,0 +1,155 @@
+{
+  "status": 0,
+  "book": [
+    {
+      "UserID": 1,
+      "FirstName": "Pedro",
+      "LastName": "Paiva",
+      "Email": "ppaiva@umich.edu",
+      "Joined": "2025-11-01",
+      "Fees": 0,
+      "isGuest": 0,
+      "Status": "Active"
+    },
+    {
+      "UserID": 4,
+      "FirstName": "John",
+      "LastName": "Cena",
+      "Email": "jcena@umich.edu",
+      "Joined": "2025-11-01",
+      "Fees": 0,
+      "isGuest": 0,
+      "Status": "Inactive"
+    },
+    {
+      "UserID": 5,
+      "FirstName": "Rick",
+      "LastName": "Grimes",
+      "Email": "rgrimes@umich.edu",
+      "Joined": "2025-11-01",
+      "Fees": 0,
+      "isGuest": 0,
+      "Status": "Active"
+    },
+    {
+      "UserID": 6,
+      "FirstName": "Abraham",
+      "LastName": "Lincoln",
+      "Email": "alincoln@umich.edu",
+      "Joined": "2025-11-02",
+      "Fees": 0,
+      "isGuest": 0,
+      "Status": "Inactive"
+    },
+    {
+      "UserID": 7,
+      "FirstName": "Elon",
+      "LastName": "Musk",
+      "Email": "emusk@umich.edu",
+      "Joined": "2025-11-02",
+      "Fees": 0,
+      "isGuest": 0,
+      "Status": "Active"
+    },
+    {
+      "UserID": 8,
+      "FirstName": "Emily",
+      "LastName": "Carson",
+      "Email": "ecarson@umich.edu",
+      "Joined": "2025-12-06",
+      "Fees": 0,
+      "isGuest": 1,
+      "Status": "Active"
+    },
+    {
+      "UserID": 9,
+      "FirstName": "Michael",
+      "LastName": "Rivera",
+      "Email": "mrivera@umich.edu",
+      "Joined": "2025-12-06",
+      "Fees": 0,
+      "isGuest": "1",
+      "Status": "Active"
+    },
+    {
+      "UserID": 10,
+      "FirstName": "Sophia",
+      "LastName": "Nguyen",
+      "Email": "snguyen@umich.edu",
+      "Joined": "2025-12-06",
+      "Fees": 0,
+      "isGuest": "1",
+      "Status": "Active"
+    },
+    {
+      "UserID": 11,
+      "FirstName": "Daniel",
+      "LastName": "Roberts",
+      "Email": "droberts@umich.edu",
+      "Joined": "2025-12-06",
+      "Fees": 0,
+      "isGuest": "1",
+      "Status": "Active"
+    },
+    {
+      "UserID": 12,
+      "FirstName": "Ava",
+      "LastName": "Thompson",
+      "Email": "athompson@umich.edu",
+      "Joined": "2025-12-06",
+      "Fees": 0,
+      "isGuest": "1",
+      "Status": "Active"
+    },
+    {
+      "UserID": 13,
+      "FirstName": "Liam",
+      "LastName": "Bennett",
+      "Email": "lbennett@umich.edu",
+      "Joined": "2025-12-06",
+      "Fees": 0,
+      "isGuest": "1",
+      "Status": "Active"
+    },
+    {
+      "UserID": 14,
+      "FirstName": "Noah",
+      "LastName": "Henderson",
+      "Email": "nhenderson@umich.edu",
+      "Joined": "2025-12-06",
+      "Fees": 0,
+      "isGuest": "0",
+      "Status": "Active"
+    },
+    {
+      "UserID": 15,
+      "FirstName": "Olivia",
+      "LastName": "Martinez",
+      "Email": "omartinez@umich.edu",
+      "Joined": "2025-12-06",
+      "Fees": 0,
+      "isGuest": "1",
+      "Status": "Active"
+    },
+    {
+      "UserID": 16,
+      "FirstName": "Ethan",
+      "LastName": "Sullivan",
+      "Email": "esullivan@umich.edu",
+      "Joined": "2025-12-06",
+      "Fees": 0,
+      "isGuest": "0",
+      "Status": "Active"
+    },
+    {
+      "UserID": 17,
+      "FirstName": "Chloe",
+      "LastName": "Foster",
+      "Email": "cfoster@umich.edu",
+      "Joined": "2025-12-06",
+      "Fees": 0,
+      "isGuest": "1",
+      "Status": "Active"
+    }
+  ]
+}

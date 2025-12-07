@@ -4,6 +4,7 @@ from .Databases.BookDatabase import BookDatabase
 from .Databases.Transaction import TransactionDatabase
 from pydantic import BaseModel
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 # # ======= Database Instantiation =======
 adminDB = AdminDatabase()
@@ -13,6 +14,20 @@ transaction = TransactionDatabase()
 
 # ======= Creates FastAPI Application =======
 app = FastAPI()
+
+# In dev, you can allow just your Angular dev server:
+origins = [
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,        # or ["*"] to allow all (dev only)
+    allow_credentials=True,
+    allow_methods=["*"],          # GET, POST, PUT, DELETE, OPTIONS, etc.
+    allow_headers=["*"],          # Authorization, Content-Type, etc.
+)
 
 # ======= Defines Base Models =======
 class LoginRequest(BaseModel):

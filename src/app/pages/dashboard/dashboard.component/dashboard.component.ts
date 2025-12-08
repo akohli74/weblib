@@ -19,6 +19,13 @@ export class DashboardComponent implements OnInit {
   books: Book[] = [];
   transactions: Transaction[] = [];
   users: User[] = [];
+  checkouts: number | undefined;
+  latefees: number | undefined;
+  overdues: number | undefined;
+  newmembers: number | undefined;
+  checkedoutbooks: number | undefined;
+  totalbooks: number | undefined;
+  totalmembers: number | undefined;
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private webLib: WebLibService) {}
@@ -82,6 +89,35 @@ export class DashboardComponent implements OnInit {
     });
     
     this.recentActivity = activity;
+
+    this.calculateCounts();
+  }
+
+  calculateCounts(): void {
+    this.totalbooks = this.books.length;
+    this.totalmembers = this.users.length;
+    this.checkouts = this.transactions.filter(t => this.getCheckouts(t)).length;
+    this.latefees = this.users.reduce((sum, u) => sum + u.Fees, 0);
+    this.overdues = this.books.filter(b => b.Late == 1).length;
+    this.checkedoutbooks = this.transactions.filter(t => this.getCheckedOutBooks(t)).length;
+    const today = new Date();
+    const cutoff = new Date(today.getDate() - 15);
+    this.newmembers = this.users.filter(u => new Date(u.Joined) < cutoff).length
+  }
+
+  getCheckedOutBooks(transaction: Transaction): boolean {
+    return transaction.LastAction === "CHECKEDOUT";
+  }
+
+  getCheckouts(transaction: Transaction) : boolean {
+    const today = new Date();
+    const cutoff = new Date();
+    cutoff.setDate(today.getDate() - 30);
+    return (
+      transaction.LastAction === 'CHECKEDOUT' &&
+      transaction.CheckOutDate !== null &&
+      new Date(transaction.CheckOutDate) > cutoff
+    );
   }
 
   createEmptyBook(bookId: number): Book {

@@ -1,6 +1,6 @@
-from .UserDatabase import UserDatabase
-from .BookDatabase import BookDatabase
-from datetime import date, timedelta
+from UserDatabase import UserDatabase
+from BookDatabase import BookDatabase
+from datetime import date, datetime, timedelta
 
 class TransactionDatabase(UserDatabase, BookDatabase):
 
@@ -64,12 +64,18 @@ class TransactionDatabase(UserDatabase, BookDatabase):
 
     bookUpdateStatus, bookUpdateMessage = self.update_book(isbn=bookISBN, isCheckedOut=True, currentTransactionId=transactionId)
 
+    #======= User Profile Update =======
+
+    userUpdateStatus, userUpdateMessage = self.update_user(userID=userId, status="Active")
+
     #======= Final CheckOut Status =======
 
-    if bookUpdateStatus == 0:
+    if bookUpdateStatus == 0 and userUpdateStatus == 0:
       return 0, f"[SUCCESS]: CHECKOUT TRANSACTION CREATED!"
-    else:
+    elif bookUpdateStatus == 1:
       return 1, bookUpdateMessage
+    else:
+      return 1, userUpdateMessage
 
   def checkIn(self, userId: int, bookISBN: int, notes: str = ''):
 
@@ -120,12 +126,18 @@ class TransactionDatabase(UserDatabase, BookDatabase):
 
     bookUpdateStatus, bookUpdateMessage = self.update_book(isbn=bookISBN, isCheckedOut=False, currentTransactionId=0)
 
+    # ======= User Profile Update =======
+
+    userUpdateStatus, userUpdateMessage = self.update_user(userID=userId, status="Inactive", fees=0)
+
     #======= Final CheckIn Status =======
 
-    if bookUpdateStatus == 0:
+    if bookUpdateStatus == 0 and userUpdateStatus == 0:
       return 0, f"[SUCCESS]: CHECKOUT TRANSACTION UPDATED --> CHECK-IN!"
-    else:
+    elif bookUpdateStatus == 1:
       return 1, bookUpdateMessage
+    else:
+      return 1, userUpdateMessage
 
   def retrieve_transaction(self, transactionId: int):
 
@@ -176,8 +188,46 @@ class TransactionDatabase(UserDatabase, BookDatabase):
   def retrieve_book_transactions(self, isbn: int):
     pass #FIXME: TO BE IMPLEMENTED IF NEEDED!
 
-  def set_late(self):
-    pass #FIXME: TO BE IMPLEMENTED!
+  def set_late_fees(self):
+
+    cur = self.conn.execute(
+      "SELECT * FROM transactions WHERE CheckInDate = ?",
+      ("awaiting",)
+    )
+
+    result = cur.fetchall()
+    cur.close()
+
+    fees_sum = 0
+
+    if len(result) == 0:
+      return 0, "[SUCCESS] NO AWAITING CHECKIN!"
+
+    for row in result:
+
+      row = dict(row)
+
+      d1 = row["DueDate"]
+      d1 = datetime.strptime(d1, "%Y-%m-%d").date()
+
+      d2 = self.get_current_date()
+      d2 = datetime.strptime(d2, "%Y-%m-%d").date()
+
+      time_dif = d2 - d1
+      if time_dif.days > 0:
+        print(row)
+        late_fee = time_dif.days * 2
+        fees_sum += late_fee
+
+        # ======= User Profile Update =======
+
+        userId = int(row["UserID"])
+        userUpdateStatus, userUpdateMessage = self.update_user(userID=userId, status="Active", fees=late_fee)
+
+        if userUpdateStatus == 1:
+          return userUpdateStatus, userUpdateMessage
+
+    return 0, fees_sum
 
   def set_missing(self):
     pass #FIXME: TO BE IMPLEMENTED!
@@ -186,25 +236,37 @@ if __name__ == '__main__':
   transactionDB = TransactionDatabase()
 
   # print(transactionDB.checkOut(
-  #   userId=7,
+  #   userId=20,
   #   bookIdentifierType="ISBN",
-  #   bookIdentifierEntry=9780061120084,
+  #   bookIdentifierEntry=9780679732761,
+  # ))
+  #
+  # print(transactionDB.checkOut(
+  #   userId=29,
+  #   bookIdentifierType="ISBN",
+  #   bookIdentifierEntry=9780756404741
+  # ))
+  #
+  # print(transactionDB.checkOut(
+  #   userId=30,
+  #   bookIdentifierType="ISBN",
+  #   bookIdentifierEntry=9780451225245
+  # ))
+  #
+  # print(transactionDB.checkOut(
+  #   userId=17,
+  #   bookIdentifierType="ISBN",
+  #   bookIdentifierEntry=9780441172719
   # ))
 
-  print(transactionDB.checkOut(
-    userId=1,
-    bookIdentifierType="ISBN",
-    bookIdentifierEntry=9780132350884
-  ))
-
   # print(transactionDB.checkIn(
-  #   userId=1,
-  #   bookISBN=9780132350884
+  #   userId=4,
+  #   bookISBN=9780679732761
   # ))
 
   # print(transactionDB.checkIn(
-  #   userId=1,
-  #   bookISBN=9781451673319
+  #   userId=17,
+  #   bookISBN=9780441172719
   # ))
 
   # print(transactionDB.checkIn(
@@ -217,3 +279,5 @@ if __name__ == '__main__':
   # print(transactionDB.retrieve_transaction(14))
 
   # print(transactionDB.get_transactions_table_next_id())
+
+  print(transactionDB.set_late_fees())

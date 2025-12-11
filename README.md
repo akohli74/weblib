@@ -17,7 +17,7 @@ WebLib works with nearly any device that has:
 
 ## Installation
 Currently, WebLib utilizes Angular.
-To install, git clone to your desired folder.
+To install and run, git clone to your desired folder.
 Go into the folder and run:
 
 

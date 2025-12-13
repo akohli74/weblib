@@ -53,8 +53,8 @@ class BookCheckinRequest(BaseModel):
   notes: str = ''
 
 class UserCreationRequest(BaseModel):
-  firstName: str
-  lastName: str
+  firstname: str
+  lastname: str
   email: str
 
 # ======= Defines Endpoints =======
@@ -125,11 +125,11 @@ def bookLookup():
 
 @app.post("/user/add")
 def addGuestUser(data: UserCreationRequest):
-  firstName = data.firstName
-  lastName = data.lastName
+  firstname = data.firstname
+  lastname = data.lastname
   email = data.email
 
-  status, val = userDB.add_user(firstName, lastName, email, True)
+  status, val = userDB.add_user(firstname, lastname, email, True)
 
   if status == 1:
     return {"status": status, "message": val}

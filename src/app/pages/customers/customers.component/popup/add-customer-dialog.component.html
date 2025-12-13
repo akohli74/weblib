@@ -1,0 +1,58 @@
+<h2 mat-dialog-title>Add Customer</h2>
+
+<div mat-dialog-content>
+  <form [formGroup]="form" class="form">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstname" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastname" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="form.controls.email.hasError('email')">Enter a valid email</mat-error>
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="outline" class="full">
+      <mat-label>Joined</mat-label>
+      <input matInput type="date" formControlName="Joined" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Fees</mat-label>
+      <input matInput type="number" min="0" formControlName="Fees" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Guest?</mat-label>
+      <mat-select formControlName="isGuest">
+        <mat-option [value]="0">No</mat-option>
+        <mat-option [value]="1">Yes</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="Status">
+        <mat-option value="Active">Active</mat-option>
+        <mat-option value="Inactive">Inactive</mat-option>
+        <mat-option value="Suspended">Suspended</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" type="button" (click)="save()">Save</button>
+</div>
+
+<style>
+  .full { width: 100%; }
+  .form { display: grid; gap: 12px; padding-top: 8px; }
+</style>

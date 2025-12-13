@@ -10,14 +10,14 @@ class UserDatabase(BaseDB):
     return date.today().strftime("%Y-%m-%d")
 
   def add_user(self,
-               firstName: str,
-               lastName: str,
+               firstname: str,
+               lastname: str,
                email: str,
                guest: bool = False):
 
     """
-    :param firstName:
-    :param lastName:
+    :param firstname:
+    :param lastname:
     :param email:
     :param guest:
 
@@ -34,7 +34,7 @@ class UserDatabase(BaseDB):
     try:
       self.conn.execute(
         "INSERT INTO users (FirstName, LastName, Email, Joined, isGuest, Status) VALUES (?, ?, ?, ?, ?, ?)",
-        (firstName, lastName, email, date_joined, guest, "Inactive")
+        (firstname, lastname, email, date_joined, guest, "Inactive")
       )
       self.conn.commit()
       return 0, "[SUCCESS]: USER CREATED!"

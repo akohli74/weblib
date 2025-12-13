@@ -1,4 +1,4 @@
-from Backend.Base import BaseDB
+from Backend.Databases.Base import BaseDB
 
 class AdminDatabase(BaseDB):
 

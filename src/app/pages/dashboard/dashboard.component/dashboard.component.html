@@ -7,7 +7,7 @@
       <i class="icon-menu"></i>
       <input
         type="text"
-        placeholder="Search Book, Customer, ISBN",
+        placeholder="Search Book, Customer, ISBN"
         [(ngModel)]="searchText"
         (keyup.enter)="onSearch()"
       />
@@ -18,16 +18,16 @@
   <!-- Top stats -->
   <section class="stats-row">
     <div class="stat-card">
-      <div class="label">Total Books</div>
-      <div class="value">{{this.totalbooks}}</div>
+      <div class="label" style="font-size: 20px">Total Books</div>
+      <div class="value" style="font-size: 40px">{{this.totalbooks}}</div>
     </div>
     <div class="stat-card">
-      <div class="label">Books Checked Out</div>
-      <div class="value">{{this.checkedoutbooks}}</div>
+      <div class="label" style="font-size: 20px">Books Checked Out</div>
+      <div class="value" style="font-size: 40px">{{this.checkedoutbooks}}</div>
     </div>
     <div class="stat-card">
-      <div class="label">Total Members</div>
-      <div class="value">{{this.totalmembers}}</div>
+      <div class="label" style="font-size: 20px">Total Members</div>
+      <div class="value" style="font-size: 40px">{{this.totalmembers}}</div>
     </div>
   </section>
 
@@ -41,11 +41,11 @@
     <div class="analytics-row">
       <div class="analytics-card green">
         <div class="title">
-          <i class="icon-book-open"></i>
+          <mat-icon style="color: #0DAA02; font-size: 30px; height: 30px; width: 30px;">menu_book</mat-icon>
           <span>Check Outs</span>
         </div>
         <div class="metric">
-          <span class="value">{{this.checkouts}}</span>
+          <span style="color: #0DAA02;" class="value">{{this.checkouts}}</span>
           <span class="trend down">▼ 30.6%</span>
         </div>
         <button (click)="goToCheckouts()" class="primary-btn">View Checkouts</button>
@@ -53,11 +53,13 @@
 
       <div class="analytics-card red">
         <div class="title">
-          <i class="icon-dollar"></i>
+          <mat-icon style="color: #ff5c5c; font-size: 30px; height: 30px; width: 30px;">
+            attach_money
+          </mat-icon>          
           <span>Late Fee's</span>
         </div>
         <div class="metric">
-          <span class="value">{{this.latefees}}</span>
+          <span style="color: #ff5c5c;" class="value">${{this.latefees}}</span>
           <span class="trend up">▲ 25.7%</span>
         </div>
         <button (click)="goToCustomers()" class="primary-btn">View Customers</button>
@@ -65,11 +67,11 @@
 
       <div class="analytics-card purple">
         <div class="title">
-          <i class="icon-warning"></i>
+          <mat-icon style="color: #f14bf3; font-size: 30px; height: 30px; width: 30px;">warning</mat-icon>
           <span>Over Dues</span>
         </div>
         <div class="metric">
-          <span class="value">{{this.overdues}}</span>
+          <span style="color: #f14bf3;" class="value">{{this.overdues}}</span>
           <span class="trend down">▼ 30.6%</span>
         </div>
         <button (click)="goToCustomers()" class="primary-btn">View Customers</button>
@@ -77,11 +79,11 @@
 
       <div class="analytics-card yellow">
         <div class="title">
-          <i class="icon-user-plus"></i>
+          <mat-icon style="color: #ffd447; font-size: 30px; height: 30px; width: 30px;">person</mat-icon>
           <span>New Members</span>
         </div>
         <div class="metric">
-          <span class="value">{{this.newmembers}}</span>
+          <span style="color: #ffd447;" class="value">{{this.newmembers}}</span>
           <span class="trend up">▲ 25.7%</span>
         </div>
         <button (click)="goToBooks()" class="primary-btn">View Books</button>

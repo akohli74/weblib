@@ -59,17 +59,19 @@
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  max-width: 280px;       
+  max-width: 230px;       
 
   .label {
     font-size: 14px;
     color: #666666;
     margin-bottom: 8px;
+    text-align: center;
   }
 
   .value {
     font-size: 26px;
     font-weight: 700;
+    text-align: center;
   }
 }
 
@@ -79,6 +81,8 @@
   align-items: baseline;
   gap: 8px;
   margin-bottom: 16px;
+  margin-top: 32px;
+
 
   h2 {
     margin: 0;
@@ -94,9 +98,8 @@
 
 .analytics-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(4, 1fr);  /* FORCE one row of 4 columns */
   gap: 20px;
-  justify-content: start;
 }
 
 .analytics-card {
@@ -104,14 +107,21 @@
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  max-width: 300px;    
+
+  height: 200px;            /* Keeps the cards box-shaped */
   display: flex;
   flex-direction: column;
   gap: 12px;
 
+  .icon {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+  }
+
   .title {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 25px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -120,10 +130,10 @@
   .metric {
     display: flex;
     align-items: baseline;
-    justify-content: space-between;
+    justify-content: center;
 
     .value {
-      font-size: 28px;
+      font-size: 48px;
       font-weight: 700;
     }
 
@@ -144,16 +154,17 @@
     margin-top: 8px;
     border: none;
     border-radius: 999px;
-    padding: 8px 16px;
-    font-size: 13px;
+    padding: 10px 16px;
+    font-size: 20px;
     font-weight: 600;
     cursor: pointer;
   }
 }
 
+
 /* color accents for each analytics card */
 .analytics-card.green .primary-btn {
-  background: #2fa24f;
+  background: #0DAA02;
   color: #ffffff;
 }
 

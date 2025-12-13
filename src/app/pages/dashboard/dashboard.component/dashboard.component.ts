@@ -95,6 +95,14 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/library']);
   }
 
+  goToCustomers() {
+    this.router.navigate(['/customers']);
+  }
+
+  goToCheckouts() {
+    this.router.navigate(['/checkout']);
+  }
+
   sortTransactions(): Transaction[] {
     return this.transactions ? this.transactions.sort((a, b) => {
         // Determine the comparison date for each transaction

@@ -48,7 +48,7 @@
           <span class="value">{{this.checkouts}}</span>
           <span class="trend down">▼ 30.6%</span>
         </div>
-        <button class="primary-btn">View Checkouts</button>
+        <button (click)="goToCheckouts()" class="primary-btn">View Checkouts</button>
       </div>
 
       <div class="analytics-card red">
@@ -60,7 +60,7 @@
           <span class="value">{{this.latefees}}</span>
           <span class="trend up">▲ 25.7%</span>
         </div>
-        <button class="primary-btn">View Customers</button>
+        <button (click)="goToCustomers()" class="primary-btn">View Customers</button>
       </div>
 
       <div class="analytics-card purple">
@@ -72,7 +72,7 @@
           <span class="value">{{this.overdues}}</span>
           <span class="trend down">▼ 30.6%</span>
         </div>
-        <button class="primary-btn">View Customers</button>
+        <button (click)="goToCustomers()" class="primary-btn">View Customers</button>
       </div>
 
       <div class="analytics-card yellow">

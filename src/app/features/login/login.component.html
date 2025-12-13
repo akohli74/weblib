@@ -3,6 +3,10 @@
     <h1 id="login-title" class="title">WebLib Login</h1>
 
     <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
+      <div style="color: red;" *ngIf="errorMessage">
+        <p>{{ errorMessage }}</p>
+      </div>
+      
       <!-- Username -->
       <div class="field">
         <label for="username">Username</label>

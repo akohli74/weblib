@@ -39,7 +39,7 @@ export const routes: Routes = [
           import('./pages/alerts/alerts.component/alerts.component').then(m => m.AlertsComponent)
       },
       {
-        path: '', pathMatch: 'full', redirectTo: 'dashboard'
+        path: '', pathMatch: 'full', redirectTo: 'auth'
       },
       {
         path: '**',

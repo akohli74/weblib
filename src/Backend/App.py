@@ -163,5 +163,8 @@ def transactionLookup():
   else:
     return {"status": status, "book": val}
 
+@app.get("/applyLateFee")
 def applyLateFee():
-  pass
+  status, val = transaction.set_late_fees()
+
+  return {"status": status, "message": val}

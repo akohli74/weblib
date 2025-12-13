@@ -1,4 +1,4 @@
-from .Base import BaseDB
+from Base import BaseDB
 
 class AdminDatabase(BaseDB):
 

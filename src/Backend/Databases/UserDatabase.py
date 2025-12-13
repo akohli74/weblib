@@ -1,4 +1,4 @@
-from .Base import BaseDB
+from Base import BaseDB
 import sqlite3
 
 from datetime import date, timedelta
@@ -34,7 +34,7 @@ class UserDatabase(BaseDB):
     try:
       self.conn.execute(
         "INSERT INTO users (FirstName, LastName, Email, Joined, isGuest, Status) VALUES (?, ?, ?, ?, ?, ?)",
-        (firstName, lastName, email, date_joined, guest, "Active")
+        (firstName, lastName, email, date_joined, guest, "Inactive")
       )
       self.conn.commit()
       return 0, "[SUCCESS]: USER CREATED!"
@@ -42,9 +42,23 @@ class UserDatabase(BaseDB):
     except sqlite3.IntegrityError:
       return 1, "[ERROR]: ALREADY REGISTERED EMAIL!"
 
-  def update_user(self):
-    #FIXME: TO BE IMPLEMENTED!
-    pass
+  def update_user(self,
+                  userID: int,
+                  status: str,
+                  fees: int = 0):
+
+    cur = self.conn.execute(
+      "UPDATE users SET Fees = ?, Status = ? WHERE UserID = ?",
+      (fees, status, userID)
+    )
+
+    if cur.rowcount == 0:
+      cur.close()
+      return 1, "[ERROR]: NO USER FOUND!"
+    else:
+      self.conn.commit()
+      cur.close()
+      return 0, "[SUCCESS]: USER UPDATED!"
 
   def get_user(self, identifier):
 
@@ -124,8 +138,9 @@ class UserDatabase(BaseDB):
 
 if __name__ == '__main__':
   pass
-  userDB = UserDatabase()
+  # userDB = UserDatabase()
   # print(userDB.add_user('Pedro', 'Paiva', 'ppaiva@umich.edu'))
-  # print(userDB.add_user('Elon', 'Musk', 'emusk@umich.edu'))
+  # print(userDB.add_user('Michael', 'Jackson', 'mjackson@umich.edu'))
   # print(userDB.get_user(4))
   # print(userDB.delete_user(9))
+  # print(userDB.update_user(1, "Active"))

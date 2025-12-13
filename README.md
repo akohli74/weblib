@@ -19,12 +19,14 @@ WebLib works with nearly any device that has:
 Currently, WebLib utilizes Angular.
 To install and run, git clone to your desired folder.
 Go into the folder and run:
-
-
 ```bash
 npm install -g @angular/cli
 ng build
 ng serve
 ```
-Once the server is confirmed to be running, open your prefered browser and navigate to `http://localhost:4200/`
+Now, change your directory into the backend and run:
+```bash
+ng serve
+```
+Once the front and backend are confirmed to be running, open your prefered browser and navigate to `http://localhost:4200/`
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

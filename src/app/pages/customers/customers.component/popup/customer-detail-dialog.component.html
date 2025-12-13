@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      {{ user.FirstName }} {{ user.LastName }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      User ID: {{ user.UserID }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div><strong>Email:</strong> {{ user.Email }}</div>
+    <div><strong>Joined:</strong> {{ user.Joined | date:'longDate' }}</div>
+    <div><strong>Fees:</strong> {{ user.Fees | currency }}</div>
+    <div><strong>Guest:</strong> {{ user.isGuest === 1 ? 'Yes' : 'No' }}</div>
+    <div><strong>Status:</strong> {{ user.Status }}</div>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button (click)="dialogRef.close()">Close</button>
+  </mat-card-actions>
+</mat-card>

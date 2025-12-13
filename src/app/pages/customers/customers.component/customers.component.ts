@@ -7,6 +7,7 @@ import { WebLibService } from '../../../services/weblib.service';
 import { User } from '../../../models/user';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCustomerDialogComponent, CreateUserInput } from './popup/add-customer-dialog.component';
+import { CustomerDetailDialogComponent } from './popup/customer-detail-dialog.component';
 
 type CustomerStatus = 'Active' | 'Inactive';
 
@@ -22,7 +23,7 @@ export class CustomersComponent implements OnInit {
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private webLib: WebLibService, private dialog: MatDialog) {}
 
-  searchTerm = '';
+  searchText = '';
   statusFilter: CustomerStatus | 'All' = 'All';
 
   customers: User[] = [];
@@ -50,12 +51,38 @@ export class CustomersComponent implements OnInit {
     });
   })}
 
+  onSearch(): void {
+      const term = (this.searchText ?? '').trim().toLowerCase();
+      if (!term) return;
+  
+      // Match on Title / Author / ISBN (and exact BookID if user types a number)
+      const asNumber = Number(term);
+      const match = this.customers.find(b =>
+        (b.FirstName ?? '').toLowerCase().includes(term) ||
+        (b.LastName ?? '').toLowerCase().includes(term) ||
+        (b.Email ?? '').toLowerCase().includes(term) ||
+        (!Number.isNaN(asNumber) && b.UserID === asNumber)
+      );
+  
+      if (!match) {
+        // You can swap this for a snackbar later
+        console.warn('No matching book found for:', term);
+        return;
+      }
+  
+      this.dialog.open(CustomerDetailDialogComponent, {
+        width: '720px',
+        maxWidth: '95vw',
+        data: match
+      });
+  }
+
   get filteredCustomers(): User[] {
     return this.customers.filter(c => {
       const matchesSearch =
-        !this.searchTerm ||
-        c.FirstName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        c.Email.toLowerCase().includes(this.searchTerm.toLowerCase());
+        !this.searchText ||
+        c.FirstName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        c.Email.toLowerCase().includes(this.searchText.toLowerCase());
 
       const matchesStatus =
         this.statusFilter === 'All' || c.Status === this.statusFilter;
@@ -65,7 +92,7 @@ export class CustomersComponent implements OnInit {
   }
 
   resetFilters() {
-    this.searchTerm = '';
+    this.searchText = '';
     this.statusFilter = 'All';
   }
 }

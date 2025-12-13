@@ -1,14 +1,16 @@
 <div class="customers-page">
     <header class="header-row">
       <h1>Customers</h1>
-  
+
       <div class="search-wrapper">
         <span class="icon-search">🔍</span>
         <input
-          type="text"
-          [(ngModel)]="searchTerm"
-          placeholder="Search by name or email"
+         type="text"
+        placeholder="Search by name or email",
+        [(ngModel)]="searchText"
+        (keyup.enter)="onSearch()"
         />
+        <i class="icon-search"></i>
       </div>
     </header>
   

@@ -7,7 +7,9 @@
       <i class="icon-menu"></i>
       <input
         type="text"
-        placeholder="Search Book, Customer, ISBN"
+        placeholder="Search Book, Customer, ISBN",
+        [(ngModel)]="searchText"
+        (keyup.enter)="onSearch()"
       />
       <i class="icon-search"></i>
     </div>

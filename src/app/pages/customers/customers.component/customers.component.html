@@ -51,15 +51,15 @@
   
         <tbody>
           <tr *ngFor="let c of filteredCustomers">
-            <td>{{ c.name }}</td>
-            <td>{{ c.email }}</td>
-            <td>{{ c.joined }}</td>
+            <td>{{ c.FirstName + ' ' + c.LastName }}</td>
+            <td>{{ c.Email }}</td>
+            <td>{{ c.Joined }}</td>
             <td>
               <span
                 class="status-badge"
-                [ngClass]="c.status.toLowerCase()"
+                [ngClass]="c.Status.toLowerCase()"
               >
-                {{ c.status }}
+                {{ c.Status }}
               </span>
             </td>
             <td class="col-action">

@@ -1,18 +1,12 @@
 // app/pages/library/library.component.ts
 // app/pages/library/library.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { WebLibService } from '../../../services/weblib.service';
+import { Book } from '../../../models/book'
 
 type BookStatus = 'Available' | 'Checked Out' | 'Missing' | 'Overdue';
-
-interface Book {
-  title: string;
-  author: string;
-  isbn: string;
-  genre: string;
-  status: BookStatus;
-}
 
 @Component({
   standalone: true,
@@ -21,56 +15,33 @@ interface Book {
   templateUrl: './library.component.html',
   styleUrls: ['./library.component.scss'],
 })
-export class LibraryComponent {
+export class LibraryComponent implements OnInit {
   searchTerm = '';
   statusFilter: BookStatus | 'All' = 'All';
   genreFilter: string | 'All' = 'All';
+  books: Book[] = [];
 
-  books: Book[] = [
-    {
-      title: 'The Great Gatsby',
-      author: 'E. Scott Fitzgerald',
-      isbn: '9780443773655',
-      genre: 'Fiction',
-      status: 'Available',
-    },
-    {
-      title: '1984',
-      author: 'George Orwell',
-      isbn: '9762388944',
-      genre: 'Fiction',
-      status: 'Checked Out',
-    },
-    {
-      title: 'To Kill a Mockingbird',
-      author: 'Harper Lee',
-      isbn: 'HB0873',
-      genre: 'Fiction',
-      status: 'Missing',
-    },
-    {
-      title: 'Moby-Dick',
-      author: 'Herman Melville',
-      isbn: 'H51052',
-      genre: 'Fiction',
-      status: 'Available',
-    },
-  ];
+  // eslint-disable-next-line @angular-eslint/prefer-inject
+  constructor(private webLib: WebLibService) {}
+
+  ngOnInit() : void {
+    this.webLib.getBooks().subscribe(bookResponse => this.books = bookResponse.books)
+  }
 
   get filteredBooks(): Book[] {
     return this.books.filter((b) => {
       const matchesSearch =
         !this.searchTerm ||
-        b.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        b.author.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        b.isbn.toLowerCase().includes(this.searchTerm.toLowerCase());
+        b.Title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        b.Author.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        b.ISBN.toLowerCase().includes(this.searchTerm.toLowerCase());
 
       const matchesStatus =
-        this.statusFilter === 'All' || b.status === this.statusFilter;
+        this.statusFilter === 'All' || b.CheckedOut;
 
       const matchesGenre =
         this.genreFilter === 'All' ||
-        b.genre.toLowerCase() === this.genreFilter.toLowerCase();
+        b.Genre.toLowerCase() === this.genreFilter.toLowerCase();
 
       return matchesSearch && matchesStatus && matchesGenre;
     });

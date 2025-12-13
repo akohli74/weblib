@@ -8,10 +8,16 @@ import { Book } from '../../../models/book';
 import { User } from '../../../models/user';
 import { Activity } from '../../../models/activity';
 import { forkJoin } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
 @Component({
   standalone: true,
   selector: 'app-dashboard-page',
-  imports: [CommonModule, MatCardModule],
+  imports: [CommonModule, MatCardModule, FormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],   
 })
@@ -26,6 +32,8 @@ export class DashboardComponent implements OnInit {
   checkedoutbooks: number | undefined;
   totalbooks: number | undefined;
   totalmembers: number | undefined;
+  recentActivity: Activity[] = [];
+  searchText: string | undefined;
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private webLib: WebLibService) {}
@@ -51,10 +59,9 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  recentActivity: Activity[] = [
-    { member: 'Jaden Becker', activity: 'Checked out', book: 'Mockingbird', date: new Date('2024-05-20') },
-    { member: 'Amanda Perkins', activity: 'Returned', book: '1984', date: new Date('2024-05-19') },
-  ];
+  onSearch() {
+    console.log(this.searchText);
+  }
 
   sortTransactions(): Transaction[] {
     return this.transactions ? this.transactions.sort((a, b) => {

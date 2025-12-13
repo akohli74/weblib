@@ -49,6 +49,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100vw;
 }
 
 .app-main {
@@ -94,5 +95,5 @@ a.mat-list-item.active-link {
   background-position: center;
   background-attachment: fixed;
   height: 100vh;
-  width: 100vw;
+  width: 75vw;
 }

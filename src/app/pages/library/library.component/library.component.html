@@ -71,16 +71,16 @@
             <td class="col-checkbox">
               <input type="checkbox" />
             </td>
-            <td>{{ book.title }}</td>
-            <td>{{ book.author }}</td>
-            <td>{{ book.isbn }}</td>
-            <td>{{ book.genre }}</td>
+            <td>{{ book.Title }}</td>
+            <td>{{ book.Author }}</td>
+            <td>{{ book.ISBN }}</td>
+            <td>{{ book.Genre }}</td>
             <td>
               <span
                 class="status-badge"
-                [ngClass]="book.status.replace(' ', '-').toLowerCase()"
+                [ngClass]="book.CheckedOut ? 'checked-out' : 'available'"
               >
-                {{ book.status }}
+                {{ book.CheckedOut }}
               </span>
             </td>
             <td class="col-actions">

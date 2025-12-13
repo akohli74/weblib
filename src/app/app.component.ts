@@ -6,9 +6,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [
     RouterOutlet,
     MatSidenavModule,
@@ -18,6 +18,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ],
   template: `<router-outlet></router-outlet>`,
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent { }

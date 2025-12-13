@@ -13,11 +13,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { BookDetailComponent } from './popup/book-detail.component';
 
 @Component({
   standalone: true,
   selector: 'app-dashboard-page',
-  imports: [CommonModule, MatCardModule, FormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, FormsModule, 
+    MatFormFieldModule, MatInputModule, MatIconModule, 
+    MatButtonModule, MatDialogModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],   
 })
@@ -33,10 +38,11 @@ export class DashboardComponent implements OnInit {
   totalbooks: number | undefined;
   totalmembers: number | undefined;
   recentActivity: Activity[] = [];
-  searchText: string | undefined;
+  searchText = '';
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(private webLib: WebLibService) {}
+  constructor(private webLib: WebLibService, private router: Router, private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     const tx$    = this.webLib.getTransactions();  // Observable<...>
@@ -59,8 +65,34 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  onSearch() {
-    console.log(this.searchText);
+  onSearch(): void {
+    const term = (this.searchText ?? '').trim().toLowerCase();
+    if (!term) return;
+
+    // Match on Title / Author / ISBN (and exact BookID if user types a number)
+    const asNumber = Number(term);
+    const match = this.books.find(b =>
+      (b.Title ?? '').toLowerCase().includes(term) ||
+      (b.Author ?? '').toLowerCase().includes(term) ||
+      (b.ISBN ?? '').toLowerCase().includes(term) ||
+      (!Number.isNaN(asNumber) && b.BookID === asNumber)
+    );
+
+    if (!match) {
+      // You can swap this for a snackbar later
+      console.warn('No matching book found for:', term);
+      return;
+    }
+
+    this.dialog.open(BookDetailComponent, {
+      width: '720px',
+      maxWidth: '95vw',
+      data: match
+    });
+  }
+
+  goToBooks() {
+    this.router.navigate(['/library']);
   }
 
   sortTransactions(): Transaction[] {

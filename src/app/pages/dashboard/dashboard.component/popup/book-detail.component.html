@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ book.Title }}</mat-card-title>
+    <mat-card-subtitle>{{ book.Author }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content style="margin-top: 12px;">
+    <div><strong>Book ID:</strong> {{ book.BookID }}</div>
+    <div><strong>Genre:</strong> {{ book.Genre }}</div>
+    <div><strong>ISBN:</strong> {{ book.ISBN }}</div>
+    <div><strong>Pages:</strong> {{ book.NumberOfPages }}</div>
+    <div><strong>Publication Date:</strong> {{ book.PublicationDate }}</div>
+
+    <div style="margin-top: 12px;">
+      <strong>Status:</strong>
+      <span *ngIf="book.Missing === 1">Missing</span>
+      <span *ngIf="book.Missing !== 1">
+        {{ book.CheckedOut === 1 ? 'Checked Out' : 'Available' }}
+        <span *ngIf="book.Late === 1"> (Late)</span>
+      </span>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button (click)="dialogRef.close()">Close</button>
+  </mat-card-actions>
+</mat-card>

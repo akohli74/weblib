@@ -1,4 +1,4 @@
-from Base import BaseDB
+from Backend.Base import BaseDB
 import sqlite3
 
 class BookDatabase(BaseDB):

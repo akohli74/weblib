@@ -28,7 +28,7 @@ app.add_middleware(
     allow_methods=["*"],          # GET, POST, PUT, DELETE, OPTIONS, etc.
     allow_headers=["*"],          # Authorization, Content-Type, etc.
 )
-``
+
 # ======= Defines Base Models =======
 class LoginRequest(BaseModel):
   username: str

@@ -2,7 +2,7 @@
   <div class="card" role="form" aria-labelledby="login-title">
     <h1 id="login-title" class="title">WebLib Login</h1>
 
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
       <!-- Username -->
       <div class="field">
         <label for="username">Username</label>
@@ -52,8 +52,7 @@
           type="submit"
           class="btn"
           [disabled]="loginForm.invalid || loading"
-          [attr.aria-busy]="loading ? 'true' : 'false'"
-        >
+          [attr.aria-busy]="loading ? 'true' : 'false'">
           {{ loading ? 'Signing in…' : 'Sign in' }}
         </button>
 

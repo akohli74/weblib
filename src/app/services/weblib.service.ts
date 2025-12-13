@@ -5,6 +5,7 @@ import { TransactionResponse } from '../models/transaction'
 import { BookResponse } from '../models/book';
 import { UserResponse } from '../models/user';
 import { CreateUserInput } from '../pages/customers/customers.component/popup/add-customer-dialog.component';
+import { LoginResponse } from '../models/login';
 @Injectable({ providedIn: 'root' })
 export class WebLibService {
   // eslint-disable-next-line @angular-eslint/prefer-inject
@@ -28,5 +29,9 @@ export class WebLibService {
 
   addCustomer(customerData: CreateUserInput): Observable<UserResponse> {
     return this.http.post<UserResponse>('http://127.0.0.1:8000/user/add', customerData);
+  }
+
+  login(username: string, password: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>('http://127.0.0.1:8000/login', { username, password });
   }
 }

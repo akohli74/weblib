@@ -41,6 +41,19 @@ export class WebLibService {
     return this.http.post<LoginResponse>('http://127.0.0.1:8000/login', { username, password });
   }
 
+  checkoutBook(bookId: string, userId: number): Observable<TransactionResponse> {
+    const bookIdentifierType = 'ISBN';
+    const bookIdentifierEntry = bookId;
+    const notes = 'Checked out from the library';
+    return this.http.post<TransactionResponse>('http://127.0.0.1:8000/book/checkout', { userId, bookIdentifierType, bookIdentifierEntry, notes });
+  }
+
+  checkInBook(bookId: string, userId: number): Observable<TransactionResponse> {
+    const notes = 'Checked in to the library';
+    const bookISBN = bookId;
+    return this.http.post<TransactionResponse>('http://127.0.0.1:8000/book/checkin', { userId, bookISBN, notes });
+  }
+
   private CreateBookRequestPayload(bookData: CreateBookInput): CreateBookRequest {
     return {
       

@@ -26,7 +26,7 @@ export class LoginComponent {
   errorMessage: string | null = null;
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(private router: Router, private weblib: WebLibService) {}
+constructor(private router: Router, private weblib: WebLibService) {}
 
   async onSubmit(form?: NgForm): Promise<void> {
     if (form && form.invalid) {

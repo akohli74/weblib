@@ -7,7 +7,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-import { LoginComponent } from './features/login/login.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -18,9 +17,8 @@ import { LoginComponent } from './features/login/login.component';
     MatListModule,
     MatButtonModule,
     MatIconModule,
-    MatDialogModule,
-    LoginComponent
-  ],
+    MatDialogModule
+],
   template: `<router-outlet></router-outlet>`,
   styleUrls: ['./app.component.scss']
 })

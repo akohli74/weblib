@@ -39,6 +39,16 @@
         <span>Alerts</span>
       </a>
     </mat-nav-list>
+
+    <button
+      mat-raised-button
+      color="primary"
+      aria-label="Scan"
+      (click)="openScanPopup()"
+    >
+      <mat-icon>videocam</mat-icon>
+      <span style="margin-left: 8px;">Scan</span>
+    </button>
   </mat-sidenav>
 
   <mat-sidenav-content class="app-content">

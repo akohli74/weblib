@@ -43,6 +43,7 @@
       <table>
         <thead>
           <tr>
+            <th>User Id</th>
             <th>Name</th>
             <th>Email</th>
             <th>Joined</th>
@@ -53,6 +54,7 @@
   
         <tbody>
           <tr *ngFor="let c of filteredCustomers">
+            <td>{{ c.UserID }}</td>
             <td>{{ c.FirstName + ' ' + c.LastName }}</td>
             <td>{{ c.Email }}</td>
             <td>{{ c.Joined }}</td>

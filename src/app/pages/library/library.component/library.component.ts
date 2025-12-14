@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WebLibService } from '../../../services/weblib.service';
 import { Book } from '../../../models/book'
+import { AddBookDialogComponent, CreateBookInput } from './popup/add-book-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 type BookStatus = 'Available' | 'Checked Out' | 'Missing' | 'Overdue';
 
@@ -22,10 +24,28 @@ export class LibraryComponent implements OnInit {
   books: Book[] = [];
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(private webLib: WebLibService) {}
+  constructor(private webLib: WebLibService, private dialog: MatDialog) {}
 
   ngOnInit() : void {
     this.webLib.getBooks().subscribe(bookResponse => this.books = bookResponse.books)
+  }
+
+  openAddBook(): void {
+    const ref = this.dialog.open(AddBookDialogComponent, {
+      width: '720px',
+      maxWidth: '95vw',
+    });
+
+    ref.afterClosed().subscribe((result?: CreateBookInput) => {
+          if (!result) return;
+    
+          this.webLib.addBook(result).subscribe(() => {
+            this.webLib.getBooks().subscribe(bookResponse => {
+              this.books = bookResponse.books;
+            }
+          );
+        });
+      });
   }
 
   get filteredBooks(): Book[] {

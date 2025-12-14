@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TransactionResponse } from '../models/transaction'
-import { BookResponse } from '../models/book';
+import { BookResponse, CreateBookRequest } from '../models/book';
 import { UserResponse } from '../models/user';
 import { CreateUserInput } from '../pages/customers/customers.component/popup/add-customer-dialog.component';
 import { LoginResponse } from '../models/login';
+import { CreateBookInput } from '../pages/library/library.component/popup/add-book-dialog.component';
 @Injectable({ providedIn: 'root' })
 export class WebLibService {
   // eslint-disable-next-line @angular-eslint/prefer-inject
@@ -31,7 +32,23 @@ export class WebLibService {
     return this.http.post<UserResponse>('http://127.0.0.1:8000/user/add', customerData);
   }
 
+  addBook(bookData: CreateBookInput): Observable<BookResponse> {
+    const requestBody = this.CreateBookRequestPayload(bookData);
+    return this.http.post<BookResponse>('http://127.0.0.1:8000/book/add', requestBody);
+  }
+
   login(username: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>('http://127.0.0.1:8000/login', { username, password });
+  }
+
+  private CreateBookRequestPayload(bookData: CreateBookInput): CreateBookRequest {
+    return {
+      
+      title: bookData.Title,
+      author: bookData.Author,
+      isbn: bookData.ISBN,
+      numberOfPages: bookData.NumberOfPages,
+      publicationDate: bookData.PublicationDate
+    };
   }
 }

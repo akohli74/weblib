@@ -16,3 +16,11 @@ export interface BookResponse {
   books: Book[];
   status: number;
 }
+
+export interface CreateBookRequest {
+    title: string;
+    author: string;
+    isbn: string;
+    numberOfPages: number;
+    publicationDate: string;
+}

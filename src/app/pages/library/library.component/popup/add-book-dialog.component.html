@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Add Customer</h2>
+
+<div mat-dialog-content>
+  <form [formGroup]="form" class="form">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="Title" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Author</mat-label>
+      <input matInput formControlName="Author" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Genre</mat-label>
+      <input matInput formControlName="Genre" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>ISBN</mat-label>
+      <input matInput formControlName="ISBN" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Number of Pages</mat-label>
+      <input matInput type="number" min="1" formControlName="NumberOfPages" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Publication Date</mat-label>
+      <input matInput type="date" formControlName="PublicationDate" />
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" type="button" (click)="save()">Save</button>
+</div>
+
+<style>
+  .full { width: 100%; }
+  .form { display: grid; gap: 12px; padding-top: 8px; }
+</style>

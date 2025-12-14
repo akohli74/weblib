@@ -1,59 +1,76 @@
 <mat-sidenav-container class="app-shell">
   <mat-sidenav mode="side" opened class="app-sidenav">
     <div class="app-logo">
-      <span class="app-logo-icon">🧩</span>
-      <span class="app-logo-text">{{ title }}</span>
+      <div class="app-logo-img"></div>      
+      <span class="app-logo-text" style="font-size: 30px; margin-left: 10px; margin-bottom: 7px">{{ title }}</span>
     </div>
 
     <div class="librarian">
       <mat-list-item class="user">
-        <mat-icon>account_circle</mat-icon>
+        <mat-icon class="user-icon">account_circle</mat-icon>
         <span class="name">Kimberly</span><br/>
         <span class="role">Librarian</span>
       </mat-list-item>
     </div>
 
     <mat-nav-list>
-      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
-        <mat-icon>home</mat-icon>
-        <span>Dashboard</span>
-      </a>
 
-      <a mat-list-item routerLink="/library" routerLinkActive="active-link">
-        <mat-icon>book</mat-icon>
-        <span>Book Library</span>
+      <a mat-list-item class="side-nav-item" routerLink="/dashboard" routerLinkActive="active-link">
+        <mat-icon fontSet="material-symbols-outlined"
+                  style="font-size: 30px; height: 30px; width: 30px; transform: translateY(7px);">
+          home
+        </mat-icon>
+        <span style="font-size: 20px; margin-left: 10px">Dashboard</span>
       </a>
-
-      <a mat-list-item routerLink="/customers" routerLinkActive="active-link">
-        <mat-icon>person</mat-icon>
-        <span>Customers</span>
+    
+      <a mat-list-item class="side-nav-item" routerLink="/library" routerLinkActive="active-link">
+        <mat-icon fontSet="material-symbols-outlined"
+                  style="font-size: 30px; height: 30px; width: 30px; transform: translateY(7px);">
+          book_2
+        </mat-icon>
+        <span style="font-size: 20px; margin-left: 10px">Book Library</span>
       </a>
-
-      <a mat-list-item routerLink="/checkout" routerLinkActive="active-link">
-        <mat-icon>menu_book</mat-icon>
-        <span>Checkouts</span>
+    
+      <a mat-list-item class="side-nav-item" routerLink="/customers" routerLinkActive="active-link">
+        <mat-icon fontSet="material-symbols-outlined"
+                  style="font-size: 30px; height: 30px; width: 30px; transform: translateY(7px);">
+          person
+        </mat-icon>
+        <span style="font-size: 20px; margin-left: 10px">Customers</span>
       </a>
-
-      <a mat-list-item routerLink="/alerts" routerLinkActive="active-link">
-        <mat-icon>error</mat-icon>
-        <span>Alerts</span>
+    
+      <a mat-list-item class="side-nav-item" routerLink="/checkout" routerLinkActive="active-link">
+        <mat-icon fontSet="material-symbols-outlined"
+                  style="font-size: 30px; height: 30px; width: 30px; transform: translateY(7px);">
+          menu_book
+        </mat-icon>
+        <span style="font-size: 20px; margin-left: 10px">Checkouts</span>
       </a>
+    
+      <a mat-list-item class="side-nav-item" routerLink="/alerts" routerLinkActive="active-link">
+        <mat-icon fontSet="material-symbols-outlined"
+                  style="font-size: 30px; height: 30px; width: 30px; transform: translateY(7px);">
+          error
+        </mat-icon>
+        <span style="font-size: 20px; margin-left: 10px">Alerts</span>
+      </a>
+    
     </mat-nav-list>
+    
 
     <button
       mat-raised-button
+      class="scan-btn"
       color="primary"
       aria-label="Scan"
       (click)="openScanPopup()"
     >
-      <mat-icon>videocam</mat-icon>
       <span style="margin-left: 8px;">Scan</span>
     </button>
   </mat-sidenav>
 
   <mat-sidenav-content class="app-content">
     <mat-toolbar color="primary" class="app-toolbar">
-      <span class="toolbar-title">{{ title }}</span>
       <span class="spacer"></span>
 
       <button mat-icon-button (click)="toggleTheme()" aria-label="Toggle dark mode">

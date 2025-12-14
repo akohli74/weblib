@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { WebLibService } from '../../services/weblib.service';
 import { LoginResponse } from '../../models/login';
+import { EventingService } from '../../services/eventing.service';
 interface LoginModel {
   username: string;
   password: string;
@@ -16,7 +17,7 @@ interface LoginModel {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   model: LoginModel = {
     username: '',
     password: '',
@@ -26,8 +27,12 @@ export class LoginComponent {
   errorMessage: string | null = null;
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
-constructor(private router: Router, private weblib: WebLibService) {}
+constructor(private router: Router, private weblib: WebLibService, private eventingService: EventingService) {}
 
+  ngOnInit(): void {
+    // Initialization code if needed
+    this.eventingService.emit({ type: 'LOGOUT' });
+  }
   async onSubmit(form?: NgForm): Promise<void> {
     if (form && form.invalid) {
       form.control.markAllAsTouched();
@@ -42,6 +47,7 @@ constructor(private router: Router, private weblib: WebLibService) {}
       this.weblib.login(this.model.username, this.model.password).subscribe((r: LoginResponse) => {
         if (!r.status) {
           // Handle successful login
+          localStorage.setItem('userId', JSON.stringify(r.userId));
           this.router.navigate(['/dashboard']);
         } else {
           // Handle login failure

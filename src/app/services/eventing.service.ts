@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 export type UiCommand =
   | { type: 'REFRESH_BOOKS' }
   | { type: 'OPEN_CREATE_BOOK' }
+  | { type: 'LOGOUT' }
   | { type: 'SET_FILTER'; value: string };
 
 @Injectable({ providedIn: 'root' })

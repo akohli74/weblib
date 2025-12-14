@@ -1,4 +1,5 @@
 export interface LoginResponse {
   status: number,
-  message: string
+  message: string,
+  userId: string
 }

@@ -139,7 +139,7 @@ class UserDatabase(BaseDB):
 if __name__ == '__main__':
   pass
   # userDB = UserDatabase()
-  # print(userDB.add_user('Pedro', 'Paiva', 'ppaiva@umich.edu'))
+  # print(userDB.add_user('Michael', 'Jordan', 'mjordan@umich.edu'))
   # print(userDB.add_user('Michael', 'Jackson', 'mjackson@umich.edu'))
   # print(userDB.get_user(4))
   # print(userDB.delete_user(9))

@@ -80,7 +80,7 @@
                 class="status-badge"
                 [ngClass]="book.CheckedOut ? 'checked-out' : 'available'"
               >
-                {{ book.CheckedOut }}
+                {{ book.CheckedOut ? 'Checked Out' : 'Available'}}
               </span>
             </td>
             <td class="col-actions">

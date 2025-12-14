@@ -7,6 +7,8 @@ import { WebLibService } from '../../../services/weblib.service';
 import { Book } from '../../../models/book'
 import { AddBookDialogComponent, CreateBookInput } from './popup/add-book-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { filter } from 'rxjs/operators';
+import { EventingService } from '../../../services/eventing.service';
 
 type BookStatus = 'Available' | 'Checked Out' | 'Missing' | 'Overdue';
 
@@ -21,11 +23,19 @@ export class LibraryComponent implements OnInit {
   searchTerm = '';
   statusFilter: BookStatus | 'All' = 'All';
   genreFilter: string | 'All' = 'All';
-  books: Book[] = [];
+  public books: Book[] = [];
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(private webLib: WebLibService, private dialog: MatDialog) {}
-
+  constructor(private webLib: WebLibService, private dialog: MatDialog,
+    // eslint-disable-next-line @angular-eslint/prefer-inject
+    private eventingService: EventingService) {
+    this.eventingService.commands$
+      .pipe(filter(c => c.type === 'REFRESH_BOOKS'))
+      .subscribe(() => {
+        this.webLib.getBooks().subscribe(bookResponse => this.books = bookResponse.books);
+      });
+    }
+    
   ngOnInit() : void {
     this.webLib.getBooks().subscribe(bookResponse => this.books = bookResponse.books)
   }
@@ -40,12 +50,9 @@ export class LibraryComponent implements OnInit {
           if (!result) return;
     
           this.webLib.addBook(result).subscribe(() => {
-            this.webLib.getBooks().subscribe(bookResponse => {
-              this.books = bookResponse.books;
-            }
-          );
+            this.eventingService.emit({ type: 'REFRESH_BOOKS' });
+          });
         });
-      });
   }
 
   get filteredBooks(): Book[] {

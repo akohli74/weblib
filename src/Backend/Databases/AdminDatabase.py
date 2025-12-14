@@ -16,9 +16,9 @@ class AdminDatabase(BaseDB):
       return 1, "[ERROR]: INVALID ADMIN USERNAME!"
 
     if row["password"] == password:
-      return 0, "[SUCCESS]: ADMIN ACCESS GRANTED!"
+      return 0, "[SUCCESS]: ADMIN ACCESS GRANTED!", row["AdminID"]
     else:
-      return 1, "[ERROR]: INVALID ADMIN PASSWORD!"
+      return 1, "[ERROR]: INVALID ADMIN PASSWORD!", None
 
 if __name__ == "__main__":
   pass

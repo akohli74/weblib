@@ -63,9 +63,9 @@ def login(data: LoginRequest):
   username = data.username
   password = data.password
 
-  status, message = adminDB.admin_login(username, password)
+  status, message, userId = adminDB.admin_login(username, password)
 
-  return {"status": status, "message": message}
+  return {"status": status, "message": message, "userId": userId}
 
 def logout():
   pass

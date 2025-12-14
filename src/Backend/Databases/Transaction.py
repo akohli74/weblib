@@ -1,5 +1,6 @@
-from Backend.Databases.UserDatabase import UserDatabase
-from Backend.Databases.BookDatabase import BookDatabase
+from .UserDatabase import UserDatabase
+from .BookDatabase import BookDatabase
+
 from datetime import date, datetime, timedelta
 
 class TransactionDatabase(UserDatabase, BookDatabase):

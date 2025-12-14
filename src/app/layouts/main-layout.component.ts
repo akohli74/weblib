@@ -1,5 +1,5 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { RouterOutlet, RouterModule, Router } from '@angular/router';
+import { RouterOutlet, RouterModule, Router, NavigationEnd } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
@@ -11,6 +11,7 @@ import { WebLibService } from '../services/weblib.service';
 import { UserResponse } from '../models/user';
 import { EventingService } from '../services/eventing.service';
 import { filter } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-main-layout',
@@ -23,42 +24,61 @@ import { filter } from 'rxjs';
     MatListModule,
     MatIconModule,
     MatButtonModule,
+    CommonModule
   ],
   templateUrl: "main-layout.component.html",
   styleUrl: "main-layout.component.scss"
 })
 export class MainLayoutComponent implements OnInit {
+  hideNav = false;
+  userName: string | undefined;
+
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private dialog: MatDialog, private router: Router, 
     // eslint-disable-next-line @angular-eslint/prefer-inject
     private webLib: WebLibService, private eventingService: EventingService) {}
   
   title = 'Web Lib';
-  userName: string | undefined;
 
   // bind a CSS class on the host for dark mode
   @HostBinding('class.dark-theme') darkTheme = false;
   
-ngOnInit(): void {
-  const userId = localStorage.getItem("userId");
-  if (userId) {
-    this.webLib.getUsers().subscribe((users: UserResponse) => {
-      // check if the user is logged in
-      const user = users.book.find(user => user.UserID === parseInt(userId));
-      this.userName = user?.FirstName + ' ' + user?.LastName;
+  ngOnInit(): void {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      this.webLib.getUsers().subscribe((users: UserResponse) => {
+        const user = users.book.find(user => user.UserID === parseInt(userId));
+        this.userName = user?.FirstName + ' ' + user?.LastName;
+      });
+    } else {
+      this.router.navigate(['/auth']);
+    }
+
+    this.hideNav = this.isLoginUrl(this.router.url);
+    this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe(e => {
+        this.hideNav = this.isLoginUrl(e.urlAfterRedirects);
+      });
+
+    this.eventingService.commands$
+      .pipe(filter(c => c.type === 'LOGIN'))
+      .subscribe(() => {
+        this.hideNav = false;
     });
-  } else {
-    // user is not logged in, redirect to login page
-    this.router.navigate(['/auth']);
+
+    this.eventingService.commands$
+      .pipe(filter(c => c.type === 'LOGOUT'))
+      .subscribe(() => {
+        localStorage.removeItem("userId");
+        this.hideNav = true;
+        this.userName = '';
+    });
   }
 
-  this.eventingService.commands$
-    .pipe(filter(c => c.type === 'LOGOUT'))
-    .subscribe(() => {
-      localStorage.removeItem("userId");
-      this.userName = '';
-  });
-}
+  private isLoginUrl(url: string): boolean {
+    return url.includes('/auth');
+  }
 
   toggleTheme(): void {
     this.darkTheme = !this.darkTheme;

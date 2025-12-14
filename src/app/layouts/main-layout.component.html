@@ -1,5 +1,9 @@
 <mat-sidenav-container class="app-shell">
-  <mat-sidenav mode="side" opened class="app-sidenav">
+    <mat-sidenav
+      *ngIf="!hideNav"
+      mode="side"
+      opened
+      class="app-sidenav">
     <div class="app-logo">
       <div class="app-logo-img"></div>      
       <span class="app-logo-text" style="font-size: 30px; margin-left: 10px; margin-bottom: 7px">{{ title }}</span>

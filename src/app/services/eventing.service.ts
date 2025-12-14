@@ -5,12 +5,14 @@ export type UiCommand =
   | { type: 'REFRESH_BOOKS' }
   | { type: 'OPEN_CREATE_BOOK' }
   | { type: 'LOGOUT' }
+  | { type: 'LOGIN' }
   | { type: 'SET_FILTER'; value: string };
 
 @Injectable({ providedIn: 'root' })
 export class EventingService {
   private readonly _commands = new Subject<UiCommand>();
   readonly commands$ = this._commands.asObservable();
+  urlAfterRedirects: unknown;
 
   emit(cmd: UiCommand) {
     this._commands.next(cmd);

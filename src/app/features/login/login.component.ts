@@ -48,6 +48,7 @@ constructor(private router: Router, private weblib: WebLibService, private event
         if (!r.status) {
           // Handle successful login
           localStorage.setItem('userId', JSON.stringify(r.userId));
+          this.eventingService.emit({ type: 'LOGIN' });
           this.router.navigate(['/dashboard']);
         } else {
           // Handle login failure

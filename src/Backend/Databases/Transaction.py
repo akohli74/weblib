@@ -237,9 +237,9 @@ if __name__ == '__main__':
   transactionDB = TransactionDatabase()
 
   # print(transactionDB.checkOut(
-  #   userId=20,
+  #   userId=21,
   #   bookIdentifierType="ISBN",
-  #   bookIdentifierEntry=9780679732761,
+  #   bookIdentifierEntry=9780441172719,
   # ))
   #
   # print(transactionDB.checkOut(
@@ -271,8 +271,8 @@ if __name__ == '__main__':
   # ))
 
   # print(transactionDB.checkIn(
-  #   userId=1,
-  #   bookISBN=9780547928227
+  #   userId=35,
+  #   bookISBN=9780441172719
   # ))
 
   # print(transactionDB.retrieve_user_transactions(userId=1))
@@ -281,4 +281,4 @@ if __name__ == '__main__':
 
   # print(transactionDB.get_transactions_table_next_id())
 
-  print(transactionDB.set_late_fees())
+  # print(transactionDB.set_late_fees())

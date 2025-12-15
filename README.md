@@ -21,16 +21,14 @@ To install and run, git clone to your desired folder.
 Go into the folder and run:
 ```bash
 git clone https://github.com/akohli74/weblib.git
+```
+Now, change your directory into the frontend (the 'weblib' folder) and run:
+```bash
 npm install -g @angular/cli
 npm install
 ng build
 ng serve
 ```
-Now, change your directory into the frontend (the root folder) and run:
-```bash
-ng serve
-```
-
 Now you must start up the backend. It's written in python. So, you must have that installed first. You also need uvicorn, which you can install with homebrew (chocolatey for windows).
 
 Execute the following commands to install python/uvicorn:

@@ -1,5 +1,3 @@
-// app/pages/customers/customers.component.ts
-// app/pages/customers/customers.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

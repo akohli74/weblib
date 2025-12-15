@@ -44,11 +44,16 @@ body {
 }
 
 .auth {
-  min-height: 100%;
-  display: grid;
-  place-items:left;
-  padding: 24px;
-  max-width: 100%;
+  height: 100vh;
+  width: 100vw;
+
+  background-image: url('../../../../assets/weblib.jpg'); /* your full screenshot image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
 }
 
 .card {
@@ -175,4 +180,110 @@ input:focus-visible {
   justify-content: center;
   align-items: center;
   padding: 24px;
+}
+
+.login-wrapper {
+  height: 100vh;
+  width: 100vw;
+
+  background-image: url('../../../../assets/weblib.jpg');  /* SAME PATH THAT WORKS IN DASHBOARD */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+/* Illustration on right side */
+.login-illustration {
+  position: absolute;
+  right: 6%;
+  bottom: 0;
+  height: 90%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* Login card */
+.login-card {
+  background: white;
+  padding: 40px 48px;
+  border-radius: 22px;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.18);
+  border: 2px solid #e5e2d8;
+  width: 380px;
+  z-index: 2;
+  margin-right: 28%;
+}
+
+/* Title */
+.login-title {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 800;
+  color: #14213d;
+  margin-bottom: 32px;
+}
+
+/* Fields */
+.field input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: 2px solid #d7d7d7;
+  margin-bottom: 18px;
+  background: #ffffff;
+}
+
+.field input::placeholder {
+  color: #8c8c8c;
+}
+
+/* Login button */
+.login-btn {
+  margin-top: 6px;
+  width: 100%;
+  padding: 14px;
+  font-size: 20px;
+  background: #1c325c;
+  color: white;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-btn:hover {
+  background: #162948;
+}
+
+/* Bottom row (remember me + forgot) */
+.login-row {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+/* Sign up row */
+.signup-row {
+  margin-top: 20px;
+  font-size: 15px;
+  text-align: center;
+}
+
+/* Links */
+.small-link {
+  color: #1a2e57;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.small-link:hover {
+  opacity: 0.7;
 }

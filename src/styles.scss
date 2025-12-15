@@ -22,3 +22,104 @@ body {
 * {
   box-sizing: border-box;
 }
+
+/* GLOBAL SIDEBAR AND ICON FIXES */
+.app-sidenav mat-icon {
+  transform: translateY(7px);
+  font-size: 30px;
+}
+
+/* GLOBAL NAV & SIDEBAR STYLES ------------------------------------------- */
+
+.app-sidenav {
+  width: 260px;
+  padding-top: 8px;
+}
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  padding: 16px 16px 8px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.app-logo-img {
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px;
+}
+
+/* USER INFO SECTION */
+.user {
+  display: flex !important;
+  align-items: center !important;
+  padding: 12px 8px !important;
+  height: auto !important;
+}
+
+.user .mat-list-item-content {
+  align-items: flex-start !important;  
+}
+
+.user-icon {
+  font-size: 50px !important;
+  width: 50px !important;
+  height: 50px !important;
+  line-height: 50px !important;
+  transform: translateY(25px);
+  margin-right: 10px;
+}
+
+.name {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.role {
+  font-size: 13px;
+  margin-left: 70px;
+}
+
+/* NAVIGATION ITEM SPACING */
+mat-nav-list a.mat-list-item {
+  margin-bottom: 16px !important;
+}
+
+mat-nav-list a.mat-list-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* ICON ALIGNMENT */
+mat-icon.nav-icon,
+mat-nav-list mat-icon {
+  font-size: 30px !important;
+  height: 30px !important;
+  width: 30px !important;
+  transform: translateY(7px) !important;
+}
+
+/* SCAN BUTTON (GLOBAL) */
+.scan-btn {
+  background-color: #4285f4 !important;
+  color: white !important;
+  border-radius: 14px !important;
+  padding: 12px 28px !important;
+  margin-left: 30px;
+  margin-top: 200px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px;
+  font-size: 40px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  width: 200px;
+  height: 70px;
+}
+
+.scan-text {
+  font-size: 50px;
+  font-weight: 700;
+}
